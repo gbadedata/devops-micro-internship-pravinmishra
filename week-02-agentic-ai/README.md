@@ -117,6 +117,10 @@ README.md is written for humans; CLAUDE.md is written for the AI. The same quest
 
 ![React refused](./screenshots/a2-5-react-refused.png)
 
+**6. CLAUDE.md committed and visible on GitHub**
+
+![CLAUDE.md on GitHub](./screenshots/a2-6-claude-md-on-github.png)
+
 ---
 
 ## Assignment 3: Skills
@@ -162,6 +166,10 @@ The interesting part of this assignment was not the automation, it was the const
 **6. Running `/tf-plan`: clean plan plus risk analysis**
 
 ![tf-plan run](./screenshots/a3-6-tf-plan-run.png)
+
+**7. The published LinkedIn post (with mentor tags and the required P.S.)**
+
+![LinkedIn post](./screenshots/a3-7-linkedin-post.png)
 
 ### Write-up
 
