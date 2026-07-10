@@ -15,7 +15,7 @@
 | | |
 |---|---|
 | **Name** | Oluwagbade Odimayo |
-| **LinkedIn** | [oluwagbade-odimayo-](www.linkedin.com/in/oluwagbade-odimayo-) |
+| **LinkedIn** | [oluwagbade-odimayo-](https:/www.linkedin.com/in/oluwagbade-odimayo-) |
 | **Location** | United Kingdom |
 | **Background** | Data Scientist, Data Engineer & Aspiring DevOps Engineer - learning in public across [dev.to](https://dev.to/gbadedata), [Medium](https://medium.com/@gbadedata) and [GitHub](https://github.com/gbadedata) |
 | **Goal** | Shipping real pipelines, cloud deployments and automation - and helping other beginners by documenting every step openly |
