@@ -19,7 +19,7 @@ The point is not to let AI run wild on infrastructure. It is the opposite: keep 
 | 1 | Setup & Agentic Loop | Install Claude Code, observe Gather, Act, Verify | Done |
 | 2 | CLAUDE.md | Teach Claude the project | Done |
 | 3 | Skills | Reusable slash-command workflows | Done |
-| 4 | Subagents | A team of specialist agents | Pending |
+| 4 | Subagents | A team of specialist agents | In progress |
 | 5 | MCP | Connect Claude to live tools | Pending |
 | 6 | Hooks & Permissions | Safety guardrails | Pending |
 | 7 | Memory | Persistence across sessions | Pending |
@@ -181,7 +181,40 @@ LinkedIn: [post](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinm
 
 ## Assignment 4: Subagents
 
-*In progress.*
+**Goal:** Build three specialist subagents, understand why each uses a different model and tool set, then delegate to two of them (security-auditor and cost-optimizer) to review the Terraform generated in Assignment 3.
+
+### What I did
+
+1. **Created `.claude/agents/`** and placed three agent files: `security-auditor.md`, `tf-writer.md`, and `cost-optimizer.md`. Each is a Markdown file whose frontmatter declares its tools, model, and a description that Claude matches against a natural-language request when deciding whether to delegate.
+
+2. **Compared the configurations.** The three agents are configured differently on purpose. `security-auditor` and `cost-optimizer` are both read-only (Read, Grep, Glob) but run on different models (Sonnet and Haiku). `tf-writer` is the only one with Write, and it runs on `inherit`. This mirrors a real team: separate specialists, each with the access and the model that fit their job.
+
+### Design questions
+
+**Why does the cost optimizer use Haiku instead of Sonnet?**
+The cost optimizer runs a fast, checklist-style scan of the Terraform (CloudFront price class, S3 storage class, lifecycle rules, cache settings) rather than deep reasoning. Haiku is faster and cheaper, which suits a lightweight, frequently-run check. Using Sonnet would cost more and run slower for no real gain, so Haiku is the deliberate choice. There is also a fitting logic to it: a cost-optimization agent should itself be cost-optimized.
+
+**Why does the security auditor not have Write in its tools list?**
+The security auditor's job is to review and report, not to change anything. Without Write access it physically cannot modify the infrastructure it is auditing, which removes any risk of it altering the Terraform and keeps the review objective. This is least privilege: the agent gets only the tools its task needs (Read, Grep, Glob) and nothing more.
+
+**Why does the tf-writer use `inherit` instead of a specific model?**
+Generating Terraform is the most complex and highest-stakes of the three tasks, so it should run on the strongest model available. `inherit` makes tf-writer use the same model as the main session (Opus, in my setup) instead of a fixed one, keeping its quality aligned with the parent session and automatically benefiting from any future model upgrade.
+
+### Screenshots
+
+**1. The `.claude/agents/` folder with all three agents**
+
+![Agents folder](./screenshots/a4-1-agents-folder.png)
+
+**2. `security-auditor.md` frontmatter: Read, Grep, Glob and model sonnet**
+
+![Security auditor config](./screenshots/a4-2-security-auditor.png)
+
+**3. `cost-optimizer.md` frontmatter: Read, Grep, Glob and model haiku**
+
+![Cost optimizer config](./screenshots/a4-3-cost-optimizer.png)
+
+*(Agent audit runs, Screenshots 4 to 6, added after Tasks 3 and 4.)*
 
 ---
 
