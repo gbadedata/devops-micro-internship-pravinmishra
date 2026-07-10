@@ -23,7 +23,7 @@ The point is not to let AI run wild on infrastructure. It is the opposite: keep 
 | 5 | MCP | Connect Claude to live tools | Done |
 | 6 | Hooks & Permissions | Safety guardrails | Done |
 | 7 | Memory | Persistence across sessions | Done |
-| 8 | Reflection Blog | Write up the week | Pending |
+| 8 | Reflection Blog | Write up the week | Done |
 
 ---
 
@@ -404,7 +404,11 @@ So the demonstration went beyond simple persistence: memory persisted across a f
 
 ## Assignment 8: Week 2 Reflection Blog
 
-*In progress.*
+**Goal:** Reflect on the Week 2 journey: the biggest technical insight, an insight about myself, a repeated weakness or loop, one system to implement going forward, what I learned about Agentic AI and DevOps, and a highlight.
+
+I published the reflection as a Markdown file in this repo. In short: least privilege applied to AI agents was my biggest technical insight, my focus on getting things right (not just done) was the personal insight, the screenshot workflow was my repeated loop, my new habit is to scan the rendered GitHub page for broken images after every assignment, automation with guardrails and a human in the loop was the core DevOps lesson, and the memory persistence test was my highlight.
+
+Read the full reflection: [Reflection – Week 2](./reflection-week-2.md)
 
 ---
 
@@ -414,7 +418,7 @@ Week 2 asks for public posts on Assignment 3 (Skills), Assignment 7 (Memory), an
 
 - Assignment 3 (Skills): [Hashnode article](https://gbadedata.hashnode.dev/agentic-devops-skills-claude-code) | [LinkedIn post](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-agenticai-claudecode-share-7481396070741299200-UkrD/)
 - Assignment 7 (Memory): [Hashnode article](https://gbadedata.hashnode.dev/claude-code-persistent-memory) | [LinkedIn post](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-agenticai-claudecode-activity-7481465385934897152-uZMg)
-- Reflection:
+- Reflection: [GitHub reflection](./reflection-week-2.md) | [LinkedIn post](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-agenticai-claudecode-activity-7481465385934897152-uZMg?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEisxRIBmu60CNDBQ0H53vTWkifIThNz8sc)
 
 ---
 
