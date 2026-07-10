@@ -1,67 +1,130 @@
-# Week 04 — <!-- Topic Name -->
+# Week 02 - Agentic AI with Claude Code
 
-## Assignment Overview
-
-<!-- One line describing what this week covered -->
+Part of the DevOps Micro Internship (DMI) Cohort 3 with Agentic AI
 
 ---
 
-## Task 1: <!-- Task Name -->
+## Overview
 
-**Task:** <!-- Copy the task description here -->
+Week 2 is where this internship stops talking about AI and starts building with it. Across 8 assignments I build the complete `.claude/` operating system on top of the course portfolio site: installing and running Claude Code, teaching it the project through CLAUDE.md, turning repeatable infrastructure workflows into reusable skills, delegating specialised work to subagents, connecting Claude to live external tools through MCP, wrapping everything in safety hooks and permissions, giving it memory that survives across sessions, and finishing with a written reflection on how the workflow changed the way I work.
 
-**My Answer:**
+The point is not to let AI run wild on infrastructure. It is the opposite: keep a human in control while the AI handles the boilerplate, with guardrails that make that safe.
 
-<!-- Write your answer here -->
+**Working repository (where the `.claude/` system is built):** https://github.com/gbadedata/Ultimate-Agentic-DevOps-with-Claude-Code
 
-**Screenshot:**
+**Environment for the whole week:** Ubuntu 24.04 on WSL2, VS Code connected through the Microsoft WSL extension, Claude Code v2.1.206 running on native Linux Node (installed with nvm), authenticated with a Claude Max subscription.
 
-![Task 1](./screenshots/task1.png)
-
----
-
-## Task 2: <!-- Task Name -->
-
-**Task:** <!-- Copy the task description here -->
-
-**My Answer:**
-
-<!-- Write your answer here -->
-
-**Screenshot:**
-
-![Task 2](./screenshots/task2.png)
+| # | Assignment | Focus | Status |
+|---|-----------|-------|--------|
+| 1 | Setup & Agentic Loop | Install Claude Code, observe Gather, Act, Verify | Done |
+| 2 | CLAUDE.md | Teach Claude the project | Pending |
+| 3 | Skills | Reusable slash-command workflows | Pending |
+| 4 | Subagents | A team of specialist agents | Pending |
+| 5 | MCP | Connect Claude to live tools | Pending |
+| 6 | Hooks & Permissions | Safety guardrails | Pending |
+| 7 | Memory | Persistence across sessions | Pending |
+| 8 | Reflection Blog | Write up the week | Pending |
 
 ---
 
-## Task 3: <!-- Task Name -->
+## Assignment 1: Setup & Agentic Loop
 
-**Task:** <!-- Copy the task description here -->
+**Goal:** Install and authenticate Claude Code, fork and clone the starter repository, and watch how the Agentic Loop (Gather, Act, Verify) works before any configuration is in place.
 
-**My Answer:**
+### What I did
 
-<!-- Write your answer here -->
+1. **Installed and authenticated Claude Code.** Installed the CLI with `npm install -g @anthropic-ai/claude-code` and signed in with my Claude Max subscription. Running version: 2.1.206.
 
-**Screenshot:**
+2. **Forked and cloned the starter repo** into `~/DMI` and opened it in VS Code. To make the assignment work as intended, I reset my fork back to the bare starter, removing the `CLAUDE.md`, `.claude/`, and GitHub Actions workflow that the repo now ships with, so I could build the `.claude/` system from scratch across the coming assignments. The bare state is just `index.html`, `style.css`, `privacy.html`, `terms.html`, `README.md`, and `images/`, with no `.claude/` and no `CLAUDE.md`.
 
-![Task 3](./screenshots/task3.png)
+3. **Fixed the environment properly.** Claude Code was initially resolving to a Windows Node install that leaked into WSL through a shared PATH. That showed up as Windows-style paths (`\\wsl.localhost\...`) and file ownership that did not match Linux. I installed native Linux Node with nvm and reinstalled Claude Code on it, so `which claude` now resolves to a path under `~/.nvm/...` and everything runs in the Linux environment the later assignments expect.
+
+4. **Observed the Agentic Loop** on two safe questions:
+   - *"What files are in this project and what does each one do?"* Claude read the files first (the Gather phase, visible as Read tool calls) before describing each one. It correctly identified the project as a static portfolio site with no JavaScript and no build step.
+   - *"How many lines of CSS does this project have?"* Claude ran a shell command, `wc -l style.css` (the Act phase), and reported the result.
+
+### Key finding
+
+`style.css` has **1,145 lines**. The two legal pages (`privacy.html` and `terms.html`) carry another 87 lines each of inline styles, for 1,319 lines of CSS total across the project. The value of the exercise was watching Claude read the files and run a command to reach that number rather than guessing it.
+
+### What I learned
+
+Claude Code is a CLI tool, so it runs in any terminal, but on WSL it is easy to accidentally run the Windows build against your Linux files. Getting Node and Claude Code installed natively inside Ubuntu, and confirming it with `which claude`, is the setup step that prevents a whole class of path and permission problems later. Watching the loop on low-stakes questions first is how you build trust in the tool before handing it real infrastructure.
+
+### Screenshots
+
+**1. Claude Code installed (`claude --version`)**
+
+![Claude Code version](./screenshots/a1-1-claude-version.png)
+
+**2. Authenticated (Claude Max)**
+
+![Claude Code auth banner](./screenshots/a1-2-auth-banner.png)
+
+**3. Bare starter file tree (no `.claude/`, no `CLAUDE.md`)**
+
+![Bare file tree](./screenshots/a1-3-bare-file-tree.png)
+
+**4. Gather phase: Claude reads the files before answering**
+
+![File map](./screenshots/a1-4-file-map.png)
+
+**5. Act phase: Claude runs a command and reports the CSS line count**
+
+![CSS line count](./screenshots/a1-5-css-count.png)
 
 ---
 
-## Task 4: LinkedIn Post
+## Assignment 2: CLAUDE.md
 
-**Post:** <!-- Paste your LinkedIn post URL here -->
-
----
-
-## Key Learnings
-
-<!-- 3-5 bullet points on what you learned this week -->
-
-- 
-- 
-- 
+*In progress.*
 
 ---
 
-*Part of the [DevOps Micro Internship with Agentic AI](https://www.linkedin.com/in/pravin-mishra-aws-trainer/) by Pravin Mishra — Join: https://discord.pravinmishra.com/*
+## Assignment 3: Skills
+
+*In progress.*
+
+---
+
+## Assignment 4: Subagents
+
+*In progress.*
+
+---
+
+## Assignment 5: MCP
+
+*In progress.*
+
+---
+
+## Assignment 6: Hooks & Permissions
+
+*In progress.*
+
+---
+
+## Assignment 7: Memory
+
+*In progress.*
+
+---
+
+## Assignment 8: Week 2 Reflection Blog
+
+*In progress.*
+
+---
+
+## LinkedIn Posts
+
+Week 2 requires LinkedIn posts for Assignment 3 (Skills), Assignment 7 (Memory), and the Assignment 8 reflection. Links added as posted.
+
+- Assignment 3 (Skills):
+- Assignment 7 (Memory):
+- Reflection:
+
+---
+
+*Part of the [DevOps Micro Internship with Agentic AI](https://www.linkedin.com/in/pravin-mishra-aws-trainer/) by Pravin Mishra. Join: https://discord.pravinmishra.com/*
