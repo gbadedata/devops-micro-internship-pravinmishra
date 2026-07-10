@@ -17,7 +17,7 @@ The point is not to let AI run wild on infrastructure. It is the opposite: keep 
 | # | Assignment | Focus | Status |
 |---|-----------|-------|--------|
 | 1 | Setup & Agentic Loop | Install Claude Code, observe Gather, Act, Verify | Done |
-| 2 | CLAUDE.md | Teach Claude the project | Pending |
+| 2 | CLAUDE.md | Teach Claude the project | Done |
 | 3 | Skills | Reusable slash-command workflows | Pending |
 | 4 | Subagents | A team of specialist agents | Pending |
 | 5 | MCP | Connect Claude to live tools | Pending |
@@ -77,7 +77,45 @@ Claude Code is a CLI tool, so it runs in any terminal, but on WSL it is easy to 
 
 ## Assignment 2: CLAUDE.md
 
-*In progress.*
+**Goal:** Generate a starter CLAUDE.md, customize it into five sections, and prove through a before/after test that Claude's behaviour changes based on the file.
+
+### What I did
+
+1. **Captured the "before" state.** With no CLAUDE.md in the project, I asked Claude "What is this project and how should I deploy it?" It read the files and gave a generic answer: deploy with Nginx on an Ubuntu VM. It had no idea about the intended AWS deployment because nothing had told it.
+
+2. **Generated a first draft with `/init`.** Claude scanned the project and wrote a starter CLAUDE.md. It captured the static site, the two separate CSS systems, and the DMI footer rule, but said nothing about S3, CloudFront, or Terraform.
+
+3. **Customized it into five sections:** Project Overview (S3, CloudFront, Terraform, GitHub Actions), Architecture (with the explicit "Pure HTML5 and CSS3. No JavaScript." line), Commands (terraform init, plan, apply, and a local preview), Conventions (Terraform-only changes, no JavaScript, mobile-first breakpoints), and Safety (no secrets in the file). I deliberately wrote "No JavaScript" as a flat rule rather than framing the missing script as a bug to fix, so the convention would actually hold in the next test.
+
+4. **Proved the file changed Claude's behaviour** in a fresh session (a fresh session is required because Claude only reads CLAUDE.md at startup):
+   - Same deployment question, different answer. This time Claude described the project as AWS S3 and CloudFront provisioned with Terraform and automated via GitHub Actions, pulled straight from CLAUDE.md, and even flagged that the Terraform does not physically exist in the repo yet.
+   - Asked to "Add a React component to the homepage," Claude refused and cited CLAUDE.md by name, quoting both the Architecture line ("Pure HTML5 and CSS3. No JavaScript.") and the Conventions line ("No JavaScript in this project."), then asked me to confirm before doing anything.
+
+### What I learned
+
+README.md is written for humans; CLAUDE.md is written for the AI. The same question produced a completely different answer once the file existed, which is the clearest possible proof that a few lines of project context change how the agent behaves across every session. Writing conventions as firm rules, not soft observations, is what makes the agent enforce them.
+
+### Screenshots
+
+**1. Before: no CLAUDE.md, generic Nginx deployment answer**
+
+![Before, no CLAUDE.md](./screenshots/a2-1-before-nginx.png)
+
+**2. Auto-generated CLAUDE.md from /init**
+
+![Auto-generated CLAUDE.md](./screenshots/a2-2-init-generated.png)
+
+**3. Customized CLAUDE.md with all five sections**
+
+![Customized CLAUDE.md](./screenshots/a2-3-customized-claude-md.png)
+
+**4. After: CLAUDE.md loaded, AWS-aware deployment answer**
+
+![After, AWS deployment answer](./screenshots/a2-4-after-aws.png)
+
+**5. Claude refuses to add React, citing the No JavaScript convention**
+
+![React refused](./screenshots/a2-5-react-refused.png)
 
 ---
 
