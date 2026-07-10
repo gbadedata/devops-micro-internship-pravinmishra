@@ -167,6 +167,8 @@ The interesting part of this assignment was not the automation, it was the const
 
 Full article: [One Command Wrote My Entire AWS Infrastructure. The Interesting Part Is What It Wasn't Allowed to Do.](https://gbadedata.hashnode.dev/agentic-devops-skills-claude-code)
 
+LinkedIn: [post](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-agenticai-claudecode-share-7481396070741299200-UkrD/)
+
 ---
 
 ## Assignment 4: Subagents
@@ -203,7 +205,7 @@ Full article: [One Command Wrote My Entire AWS Infrastructure. The Interesting P
 
 Week 2 asks for public posts on Assignment 3 (Skills), Assignment 7 (Memory), and the Assignment 8 reflection. Links added as published.
 
-- Assignment 3 (Skills): [Hashnode article](https://gbadedata.hashnode.dev/agentic-devops-skills-claude-code)
+- Assignment 3 (Skills): [Hashnode article](https://gbadedata.hashnode.dev/agentic-devops-skills-claude-code) | [LinkedIn post](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-agenticai-claudecode-share-7481396070741299200-UkrD/)
 - Assignment 7 (Memory):
 - Reflection:
 
