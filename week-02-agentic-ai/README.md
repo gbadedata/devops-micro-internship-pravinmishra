@@ -21,7 +21,7 @@ The point is not to let AI run wild on infrastructure. It is the opposite: keep 
 | 3 | Skills | Reusable slash-command workflows | Done |
 | 4 | Subagents | A team of specialist agents | Done |
 | 5 | MCP | Connect Claude to live tools | Done |
-| 6 | Hooks & Permissions | Safety guardrails | Pending |
+| 6 | Hooks & Permissions | Safety guardrails | Done |
 | 7 | Memory | Persistence across sessions | Pending |
 | 8 | Reflection Blog | Write up the week | Pending |
 
@@ -284,7 +284,67 @@ The token was never exposed at any point: it was created with minimal scopes, st
 
 ## Assignment 6: Hooks & Permissions
 
-*In progress.*
+**Goal:** Build safety guardrails for the agent: a permissions allow/deny list plus three hooks that intercept dangerous activity at different points, then prove all three work through live tests.
+
+### What I did
+
+1. **Configured team-level permissions** in `.claude/settings.json`: an allow list of safe, read-only Terraform and AWS commands (init, plan, validate, `aws s3 ls`, and so on) and a deny list for dangerous ones (`rm -rf`, `aws iam`).
+
+2. **Created three hook scripts** in `.claude/hooks/`, each firing at a different stage of the agent loop:
+   - `user-prompt-guard.sh` (UserPromptSubmit): inspects the prompt before Claude processes it and blocks destructive intent (delete all, nuke, wipe, and so on).
+   - `pre-tool-guard.sh` (PreToolUse): inspects a Bash command before it runs and blocks dangerous ones (`terraform destroy`, `aws s3 rm`, auto-approve applies).
+   - `post-tool-logger.sh` (PostToolUse): runs after a command and appends `terraform fmt` / `terraform validate` executions to a `deploy.log` audit trail.
+
+3. **Tested all three live:**
+   - Typed "delete all files in the terraform folder." The UserPromptSubmit hook blocked it instantly with "Destructive intent detected," before Claude read a single file.
+   - Typed "Run terraform destroy in the terraform folder." The prompt passed, Claude moved to run the command, and the PreToolUse hook blocked `terraform destroy` before execution.
+   - Typed "Run terraform validate in the terraform folder." This was allowed, ran successfully, and the PostToolUse hook logged it to `.claude/deploy.log`.
+
+### Debugging note: absolute paths for hooks
+
+The first run of the destroy test surfaced a real bug. The PostToolUse hook failed with `.claude/hooks/post-tool-logger.sh: No such file or directory`. The cause was a working-directory problem: Claude runs Terraform commands with `cd terraform`, so when a hook fired, the shell was inside `terraform/` and the relative path `.claude/hooks/...` no longer resolved (it was one level up). I fixed it by changing the hook command paths in `settings.json`, and the log path inside `post-tool-logger.sh`, to absolute paths. After that the logging hook fired cleanly. This is the correct, robust way to write hooks: never assume the working directory.
+
+### Security note
+
+`settings.json` and the hook scripts are committed and visible. The generated `deploy.log` is gitignored (it is machine-generated runtime output), and `settings.local.json` (the MCP token from Assignment 5) remains gitignored and uncommitted.
+
+### Screenshots
+
+**1. The `.claude/` structure: settings.json and the three hook scripts**
+
+![Claude structure](./screenshots/a6-1-claude-structure.png)
+
+**2. `user-prompt-guard.sh` (UserPromptSubmit hook)**
+
+![User prompt guard](./screenshots/a6-2-user-prompt-guard.png)
+
+**3. `pre-tool-guard.sh` (PreToolUse hook)**
+
+![Pre tool guard](./screenshots/a6-3-pre-tool-guard.png)
+
+**4. `post-tool-logger.sh` (PostToolUse hook)**
+
+![Post tool logger](./screenshots/a6-4-post-tool-logger.png)
+
+**5. `settings.json` with permissions and all three hooks wired up**
+
+![settings.json](./screenshots/a6-5-settings-json.png)
+
+**6. UserPromptSubmit hook blocking a destructive prompt**
+
+![UserPromptSubmit block](./screenshots/a6-6-userpromptsubmit-block.png)
+
+**7. PreToolUse hook blocking terraform destroy**
+
+![PreToolUse block](./screenshots/a6-7-pretooluse-block.png)
+
+**8. terraform validate running successfully (an allowed command)**
+
+![Validate passed](./screenshots/a6-8-validate-passed.png)
+
+**9. `.claude/deploy.log` showing the PostToolUse hook's logged entry**
+
+![Deploy log](./screenshots/a6-9-deploy-log.png)
 
 ---
 
