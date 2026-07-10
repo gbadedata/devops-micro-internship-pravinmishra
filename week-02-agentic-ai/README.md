@@ -19,7 +19,7 @@ The point is not to let AI run wild on infrastructure. It is the opposite: keep 
 | 1 | Setup & Agentic Loop | Install Claude Code, observe Gather, Act, Verify | Done |
 | 2 | CLAUDE.md | Teach Claude the project | Done |
 | 3 | Skills | Reusable slash-command workflows | Done |
-| 4 | Subagents | A team of specialist agents | In progress |
+| 4 | Subagents | A team of specialist agents | Done |
 | 5 | MCP | Connect Claude to live tools | Pending |
 | 6 | Hooks & Permissions | Safety guardrails | Pending |
 | 7 | Memory | Persistence across sessions | Pending |
@@ -189,6 +189,12 @@ LinkedIn: [post](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinm
 
 2. **Compared the configurations.** The three agents are configured differently on purpose. `security-auditor` and `cost-optimizer` are both read-only (Read, Grep, Glob) but run on different models (Sonnet and Haiku). `tf-writer` is the only one with Write, and it runs on `inherit`. This mirrors a real team: separate specialists, each with the access and the model that fit their job.
 
+3. **Ran the security auditor** by typing "Audit my Terraform files for security issues." Claude matched the request to the agent's description and delegated to `security-auditor`, which ran in its own isolated context (13 tool uses, about 2m 22s on Sonnet) and returned a report-only audit organized by severity. The headline was that the core access control is solid (public access blocked, ACLs disabled, modern OAC, scoped bucket policy, HTTPS redirect, no hardcoded secrets), with the findings being hardening improvements: two High items (no CloudFront response-headers policy, and a viewer_certificate that would break if a custom domain were added), plus Medium and Low items like no S3 versioning, no explicit SSE, and no access logging. The report explicitly stated "No files were modified," which is only possible because the agent has no Write tool.
+
+4. **Ran the cost optimizer** by typing "Review my Terraform infrastructure for cost optimization." Claude delegated to `cost-optimizer`, which finished in about 38 seconds (7 tool uses on Haiku), noticeably faster than the security auditor. That speed difference is the point of using Haiku for a lightweight, checklist-style task. The report flagged PriceClass_200 as the single biggest cost lever (suggesting PriceClass_100 for a portfolio site), missing S3 lifecycle rules, and the aggressive 404 cache TTL, and it even cross-referenced the security audit where the two overlapped (access logging and the 404 rewrite).
+
+For both runs I read the reports only and did not have the agents modify the Terraform, since the task is to review, not to change the generated files.
+
 ### Design questions
 
 **Why does the cost optimizer use Haiku instead of Sonnet?**
@@ -214,7 +220,17 @@ Generating Terraform is the most complex and highest-stakes of the three tasks, 
 
 ![Cost optimizer config](./screenshots/a4-3-cost-optimizer.png)
 
-*(Agent audit runs, Screenshots 4 to 6, added after Tasks 3 and 4.)*
+**4. Claude delegating to the security-auditor agent (running in its own context)**
+
+![Security auditor delegation](./screenshots/a4-4-delegation.png)
+
+**5. The security audit report, organized by severity**
+
+![Security audit report](./screenshots/a4-5-security-report.png)
+
+**6. The cost optimization report (finished in ~38s on Haiku)**
+
+![Cost optimization report](./screenshots/a4-6-cost-report.png)
 
 ---
 
