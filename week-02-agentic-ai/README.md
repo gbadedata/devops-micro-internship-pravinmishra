@@ -20,7 +20,7 @@ The point is not to let AI run wild on infrastructure. It is the opposite: keep 
 | 2 | CLAUDE.md | Teach Claude the project | Done |
 | 3 | Skills | Reusable slash-command workflows | Done |
 | 4 | Subagents | A team of specialist agents | Done |
-| 5 | MCP | Connect Claude to live tools | Pending |
+| 5 | MCP | Connect Claude to live tools | Done |
 | 6 | Hooks & Permissions | Safety guardrails | Pending |
 | 7 | Memory | Persistence across sessions | Pending |
 | 8 | Reflection Blog | Write up the week | Pending |
@@ -236,7 +236,49 @@ Generating Terraform is the most complex and highest-stakes of the three tasks, 
 
 ## Assignment 5: MCP
 
-*In progress.*
+**Goal:** Connect Claude Code to a live external service (GitHub) through the Model Context Protocol, configure it securely, verify the connection, and prove Claude is working with real data rather than training data.
+
+### What I did
+
+1. **Created a GitHub Personal Access Token** (classic) scoped to only `repo` and `read:user`, with a 30-day expiry, named `Claude Code MCP - DMI`. Least privilege again: the token can read repos and user info, nothing more.
+
+2. **Configured the GitHub MCP server** in `.mcp.json` at the project root. This file declares the server (launched via `npx @modelcontextprotocol/server-github`) and is safe to commit because it contains no secrets. The `env` block is intentionally empty here.
+
+3. **Stored the token securely** in `.claude/settings.local.json`, in its `env` section, with `github` listed under `enabledMcpjsonServers`. The separation is the whole point: `.mcp.json` is shared team config, `settings.local.json` holds personal credentials. Before creating the file I added it to `.gitignore` and confirmed with `git check-ignore` that git would refuse to track it. After adding the real token, `git status` showed the file nowhere, so the token cannot be committed or pushed.
+
+4. **Verified the connection** by restarting Claude Code (so it re-read the config) and running `/mcp`. The GitHub server showed `connected` with 26 tools available.
+
+5. **Proved live data access** by asking Claude to fetch the README from my `Ultimate-Agentic-DevOps-with-Claude-Code` repo through the GitHub MCP server. Claude called a GitHub MCP tool, hit the live API, and returned the actual portfolio-site README (the Week 1 Nginx deployment one), not a guess. It even noticed on its own that this README and my CLAUDE.md describe two different setups and are out of sync.
+
+### Security handling
+
+The token was never exposed at any point: it was created with minimal scopes, stored only in a gitignored local file, blurred in the screenshot, and confirmed absent from GitHub after the push. `.mcp.json` is committed and visible; `settings.local.json` is not committed and never will be.
+
+### Screenshots
+
+**1. GitHub token creation showing the selected scopes (repo, read:user), token value not visible**
+
+![Token scopes](./screenshots/a5-1-token-scopes.png)
+
+**2. `.mcp.json` with the GitHub MCP server configured**
+
+![mcp.json](./screenshots/a5-2-mcp-json.png)
+
+**3. `.claude/settings.local.json` with the env section (token value covered)**
+
+![settings.local.json](./screenshots/a5-3-settings-local.png)
+
+**4. `/mcp` output showing github connected with 26 tools**
+
+![MCP connected](./screenshots/a5-4-mcp-connected.png)
+
+**5. Live GitHub query: Claude fetches the real README through the MCP server**
+
+![Live query](./screenshots/a5-5-live-query.png)
+
+**Note on gitignore:** `git status` confirming `settings.local.json` is ignored and not staged, so the token is never committed.
+
+![Gitignore proof](./screenshots/a5-gitignore-proof.png)
 
 ---
 
