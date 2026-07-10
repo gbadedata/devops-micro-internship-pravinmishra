@@ -22,7 +22,7 @@ The point is not to let AI run wild on infrastructure. It is the opposite: keep 
 | 4 | Subagents | A team of specialist agents | Done |
 | 5 | MCP | Connect Claude to live tools | Done |
 | 6 | Hooks & Permissions | Safety guardrails | Done |
-| 7 | Memory | Persistence across sessions | Pending |
+| 7 | Memory | Persistence across sessions | Done |
 | 8 | Reflection Blog | Write up the week | Pending |
 
 ---
@@ -350,7 +350,55 @@ The first run of the destroy test surfaced a real bug. The PostToolUse hook fail
 
 ## Assignment 7: Memory
 
-*In progress.*
+**Goal:** Give Claude persistent project memory, then prove across a full restart that it recalls saved facts without being told again.
+
+### What I did
+
+1. **Found the memory location.** I asked Claude where its memory lives and it gave an absolute path under `~/.claude/projects/<encoded-path>/memory/`. This is outside the repo (in my home directory), which is correct: memory is personal and machine-specific and should not be in version control.
+
+2. **Saved three facts to memory:** the hero section styling, the mobile breakpoints (900px, 768px, 600px), and a hard rule to never add JavaScript. Rather than one flat file, Claude built a small linked knowledge base: a `MEMORY.md` index plus one file per fact (`hero-gradient.md`, `mobile-breakpoints.md`, `no-javascript.md`), each with YAML frontmatter and wiki-style cross-links.
+
+3. **Ran the strict recall test.** I typed `/exit`, closed VS Code entirely, waited, and reopened a completely fresh Claude Code session with no prior conversation on screen. In that clean session I asked three questions:
+   - "What colors are used in the hero section?" Claude recalled the saved gradient (`#1a1a2e` to `#16213e`) from memory. Those hex values exist only in memory, not in CLAUDE.md or style.css, so this is unambiguous proof of recall.
+   - "What are the mobile breakpoints?" Claude recalled 900px, 768px, 600px.
+   - "Should I add a JavaScript animation?" Claude refused, citing the saved no-JavaScript rule.
+
+### What made this interesting: memory that maintains itself
+
+One of the three facts I saved was deliberately the assignment's value, and it did not match my actual CSS (the hero uses a background image with an rgba overlay, not that gradient). When I asked about the hero colors in the fresh session, Claude recalled the saved value (proving recall), then cross-checked it against the real `style.css`, found the gradient was stale, and rewrote the memory entry to the accurate values. It ran the same verification on the breakpoints, confirmed they matched, and left them alone.
+
+So the demonstration went beyond simple persistence: memory persisted across a full restart, was recalled correctly, and was actively reconciled against the source of truth. That is the behavior you would want for a project that runs for months.
+
+### Screenshots
+
+**1. The memory file path, shown by Claude**
+
+![Memory path](./screenshots/a7-1-memory-path.png)
+
+**2. Claude saving the three facts (as a linked set of memory files)**
+
+![Memory saved](./screenshots/a7-2-memory-saved.png)
+
+**3. The memory files on disk, showing the saved content**
+
+![Memory files](./screenshots/a7-3-memory-files.png)
+
+**4. A fresh Claude Code session with no previous conversation**
+
+![Fresh session](./screenshots/a7-4-fresh-session.png)
+
+**5. Claude recalling the hero section colors in the fresh session**
+
+![Recall hero](./screenshots/a7-5-recall-hero.png)
+
+**6. Claude refusing a JavaScript request, citing the saved memory rule**
+
+![Refuse JavaScript](./screenshots/a7-6-refuse-javascript.png)
+
+### Write-up
+
+- Hashnode article: [Giving My AI Agent Memory That Survives a Restart](https://gbadedata.hashnode.dev/claude-code-persistent-memory)
+- LinkedIn post: [post](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-agenticai-claudecode-activity-7481465385934897152-uZMg)
 
 ---
 
@@ -365,7 +413,7 @@ The first run of the destroy test surfaced a real bug. The PostToolUse hook fail
 Week 2 asks for public posts on Assignment 3 (Skills), Assignment 7 (Memory), and the Assignment 8 reflection. Links added as published.
 
 - Assignment 3 (Skills): [Hashnode article](https://gbadedata.hashnode.dev/agentic-devops-skills-claude-code) | [LinkedIn post](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-agenticai-claudecode-share-7481396070741299200-UkrD/)
-- Assignment 7 (Memory):
+- Assignment 7 (Memory): [Hashnode article](https://gbadedata.hashnode.dev/claude-code-persistent-memory) | [LinkedIn post](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-agenticai-claudecode-activity-7481465385934897152-uZMg)
 - Reflection:
 
 ---
