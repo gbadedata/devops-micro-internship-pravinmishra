@@ -18,7 +18,7 @@ The point is not to let AI run wild on infrastructure. It is the opposite: keep 
 |---|-----------|-------|--------|
 | 1 | Setup & Agentic Loop | Install Claude Code, observe Gather, Act, Verify | Done |
 | 2 | CLAUDE.md | Teach Claude the project | Done |
-| 3 | Skills | Reusable slash-command workflows | Pending |
+| 3 | Skills | Reusable slash-command workflows | Done |
 | 4 | Subagents | A team of specialist agents | Pending |
 | 5 | MCP | Connect Claude to live tools | Pending |
 | 6 | Hooks & Permissions | Safety guardrails | Pending |
@@ -121,7 +121,51 @@ README.md is written for humans; CLAUDE.md is written for the AI. The same quest
 
 ## Assignment 3: Skills
 
-*In progress.*
+**Goal:** Build the `.claude/skills/` folder with four skills, understand why each one has a different set of tool permissions, and run `/scaffold-terraform` to generate a full Terraform setup from a single command.
+
+### What I did
+
+1. **Created four skills** under `.claude/skills/`, each in its own folder with a `SKILL.md` file: `scaffold-terraform` (generate Terraform), `tf-plan` (plan and analyze), `tf-apply` (apply after review), and `deploy` (sync to S3 and invalidate CloudFront). The `scaffold-terraform` skill also carries a `template-spec.md` that defines the infrastructure to generate.
+
+2. **Confirmed the least-privilege design.** The key detail is that each skill only gets the tools its job needs. `tf-plan` has `allowed-tools: Bash, Read, Grep` and no Write, because a plan should never modify anything. `scaffold-terraform` is the only skill with Write, because generating files is its whole purpose. All action skills also set `disable-model-invocation: true`, so they run only when I invoke them, never automatically.
+
+3. **Ran `/scaffold-terraform`.** From one command, Claude read the template spec and generated five clean Terraform files in a new `terraform/` folder: `providers.tf`, `variables.tf`, `main.tf`, `outputs.tf`, and `backend.tf`. The generated infrastructure is a private S3 bucket with public access blocked, a scoped bucket policy, a modern Origin Access Control (not legacy OAI), and a CloudFront distribution with HTTPS redirect, a 404 to index.html rewrite, PriceClass_200, and the managed CachingOptimized policy. The backend is commented out with bootstrap instructions for the first run.
+
+4. **Ran `terraform init` and `/tf-plan`.** After `terraform init` pulled the AWS provider, the `/tf-plan` skill ran a plan that validated cleanly (6 to add, 0 to change, 0 to destroy) and, more usefully, produced a risk analysis around it: a resource table, notes on S3 bucket-name global uniqueness and CloudFront deploy time, the default-certificate caveat, and a blast-radius summary. I stopped at the plan and did not run `apply`, since provisioning live infrastructure belongs to a later week.
+
+### What I learned
+
+The interesting part of this assignment was not the automation, it was the constraint underneath it. Least privilege, the same rule we apply to IAM roles and service accounts, applies just as well to an AI agent: give each skill the smallest set of tools that lets it do its job, and make anything that touches infrastructure manual-only. A skill with no Write tool physically cannot leave a change behind. That is what makes handing repeatable workflows to an agent safe, with a human still reviewing the plan before anything ships. I wrote this up in full detail on my blog (linked below).
+
+### Screenshots
+
+**1. The `.claude/skills/` folder with all four skills**
+
+![Skills folders](./screenshots/a3-1-skills-folders.png)
+
+**2. The `scaffold-terraform` skill folder (SKILL.md and template-spec.md)**
+
+![Scaffold skill files](./screenshots/a3-2-scaffold-files.png)
+
+**3. `tf-plan/SKILL.md` frontmatter: Bash, Read, Grep, and no Write (least privilege)**
+
+![tf-plan frontmatter](./screenshots/a3-3-tf-plan-frontmatter.png)
+
+**4. Running `/scaffold-terraform`: Claude generates the Terraform files**
+
+![Scaffold run](./screenshots/a3-4-scaffold-run.png)
+
+**5. The generated `terraform/` folder with all five .tf files**
+
+![Terraform folder](./screenshots/a3-5-terraform-folder.png)
+
+**6. Running `/tf-plan`: clean plan plus risk analysis**
+
+![tf-plan run](./screenshots/a3-6-tf-plan-run.png)
+
+### Write-up
+
+Full article: [One Command Wrote My Entire AWS Infrastructure. The Interesting Part Is What It Wasn't Allowed to Do.](https://gbadedata.hashnode.dev/agentic-devops-skills-claude-code)
 
 ---
 
@@ -155,11 +199,11 @@ README.md is written for humans; CLAUDE.md is written for the AI. The same quest
 
 ---
 
-## LinkedIn Posts
+## Public Write-ups
 
-Week 2 requires LinkedIn posts for Assignment 3 (Skills), Assignment 7 (Memory), and the Assignment 8 reflection. Links added as posted.
+Week 2 asks for public posts on Assignment 3 (Skills), Assignment 7 (Memory), and the Assignment 8 reflection. Links added as published.
 
-- Assignment 3 (Skills):
+- Assignment 3 (Skills): [Hashnode article](https://gbadedata.hashnode.dev/agentic-devops-skills-claude-code)
 - Assignment 7 (Memory):
 - Reflection:
 
