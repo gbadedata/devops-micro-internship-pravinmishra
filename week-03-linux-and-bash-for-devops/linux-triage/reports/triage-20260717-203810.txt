@@ -1,0 +1,18 @@
+==========================================================
+ Linux Triage Report — Nginx + static site on port 80
+==========================================================
+ Analyst   : Oluwagbade Odimayo
+ Program   : DMI Cohort 3 | Group 3 | Week 3
+ Host      : oluwagbade-odimayo
+ Timestamp : 20260717-203810
+ Report    : /home/ubuntu/linux-triage/reports/triage-20260717-203810.txt
+----------------------------------------------------------
+[PASS] Service state    systemctl is-active nginx = active
+[PASS] Config integrity sudo nginx -t: syntax ok, test successful
+[PASS] Port 80 listener nginx is LISTEN on :80
+[PASS] HTTP reply       curl http://127.0.0.1/ returned 200
+[PASS] Static content   /var/www/html/index.html present, 20798 bytes
+----------------------------------------------------------
+ Summary: 5 PASS, 0 WARN, 0 FAIL (of 5 checks)
+ Overall : HEALTHY
+==========================================================
