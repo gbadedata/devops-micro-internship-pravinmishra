@@ -133,7 +133,7 @@ This is not a course. It is an internship-style program — real deployments, re
 | 00 | Internet & Networking Basics | ✅ Completed | ✅ Solved | — | [Blog](https://dev.to/gbadedata/how-the-internet-actually-works-networking-dns-architecture-my-dmi-devops-journey-47dp) |
 | 01 | Success Mindset | ✅ Completed | ✅ Solved | [LinkedIn](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-devops-agenticai-activity-7478867197893877762-gFYN/) | [Blog](https://gbadedata.hashnode.dev/my-2-0-version-how-i-documented-my-way-into-devops) |
 | 02 | Agentic AI with Claude Code | ✅ Completed | ✅ Solved | [LinkedIn](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-agenticai-claudecode-activity-7481465385934897152-uZMg) | [Blog](https://gbadedata.hashnode.dev/claude-code-persistent-memory) |
-| 03 | Linux & Bash for DevOps | 🔄 In Progress | ⏳ Pending | — | — |
+| 03 | Linux & Bash for DevOps | 🔄 In Progress | ⏳ Pending | [LinkedIn](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-devops-linux-activity-7483962190299906048-k4yL) | [Blog](https://gbadedata.hashnode.dev/i-had-a-backup-a-rollback-plan-both-were-useless) |
 | 04 | Git & GitHub | ⬜ Not Started | ⏳ Pending | — | — |
 | 05 | DevOps Lifecycle & Agile | ⬜ Not Started | ⏳ Pending | — | — |
 | 06 | AWS Cloud | ⬜ Not Started | ⏳ Pending | — | — |
