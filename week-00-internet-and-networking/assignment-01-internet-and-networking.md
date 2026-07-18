@@ -211,10 +211,14 @@ Add the following credit note at the end of your post:
 Paste your LinkedIn post URL here:
 
 ```text
-https://dev.to/gbadedata/how-the-internet-actually-works-networking-dns-architecture-my-dmi-devops-journey-47dp
+https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-devops-agenticai-share-7478867195096322048-Gml_/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEisxRIBmu60CNDBQ0H53vTWkifIThNz8sc
 ```
 
-> Note: For this assignment I published the write-up as a detailed technical blog post on dev.to instead of LinkedIn, covering all five tasks with full explanations and diagrams.
+## Blog Post URL
+
+```text
+https://dev.to/gbadedata/how-the-internet-actually-works-networking-dns-architecture-my-dmi-devops-journey-47dp
+```
 
 ---
 
