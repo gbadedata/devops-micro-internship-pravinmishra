@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+#
+# pre-commit - refuses any commit that stages a hardcoded secret
+# or a file larger than 1MB. Fixed rules only, no judgement calls.
+
+set -uo pipefail
+
+MAX_BYTES=1048576
+FAILED=0
+
+STAGED=$(git diff --cached --name-only --diff-filter=ACM)
+[ -z "$STAGED" ] && exit 0
+
+while IFS= read -r file; do
+  [ -f "$file" ] || continue
+
+  SIZE=$(wc -c < "$file")
+  if [ "$SIZE" -gt "$MAX_BYTES" ]; then
+    echo "BLOCKED: $file is $SIZE bytes, over the $MAX_BYTES byte limit."
+    FAILED=1
+  fi
+
+  # Skip binaries; grep -I treats them as non-matching text.
+  grep -Iq . "$file" 2>/dev/null || continue
+
+  if grep -nE 'AKIA[0-9A-Z]{16}' "$file" >/dev/null 2>&1; then
+    echo "BLOCKED: $file contains an AWS access key ID pattern."
+    grep -nE 'AKIA[0-9A-Z]{16}' "$file" | head -3 | sed 's/^/         line /'
+    FAILED=1
+  fi
+
+  if grep -nE -- '-----BEGIN [A-Z ]*PRIVATE KEY-----' "$file" >/dev/null 2>&1; then
+    echo "BLOCKED: $file contains a private key block."
+    FAILED=1
+  fi
+
+  # Markdown in this repo is coursework full of example configs, so the
+  # credential-assignment rule would fire on documentation. AKIA and
+  # private-key rules above still apply to every file, including .md.
+  case "$file" in *.md) continue ;; esac
+
+  if grep -nEi '(aws_secret_access_key|api_key|apikey|secret_key|password|auth_token)[[:space:]]*=[[:space:]]*["'"'"'][^"'"'"']{8,}["'"'"']' "$file" >/dev/null 2>&1; then
+    echo "BLOCKED: $file assigns a credential-like value to a variable."
+    FAILED=1
+  fi
+done <<< "$STAGED"
+
+if [ "$FAILED" -ne 0 ]; then
+  echo ""
+  echo "Commit rejected by hooks/pre-commit."
+  echo "Remove the flagged content and stage again."
+  exit 1
+fi
+
+exit 0
