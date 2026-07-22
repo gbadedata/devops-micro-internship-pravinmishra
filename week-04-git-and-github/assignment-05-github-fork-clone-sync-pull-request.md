@@ -20,7 +20,9 @@ Fork `pravinmishraaws/devops-micro-internship-interviews` into your own GitHub a
 
 #### Screenshot 1 — Your fork page with your username and `devops-micro-internship-interviews` visible in the browser URL
 
-Add your screenshot here.
+![Screenshot 1: fork created](screenshots/a5-01-fork.png)
+
+Forked the interviews repository into my own account. The URL shows gbadedata as the owner, and the forked from line records the original.
 
 ---
 
@@ -34,7 +36,9 @@ Configure one authentication method — HTTPS with a Personal Access Token, or S
 
 #### Screenshot 2 — Output of `git config --global --get credential.helper` (HTTPS) or `ssh -T git@github.com` (SSH) showing successful authentication — never show your token or private key
 
-Add your screenshot here.
+![Screenshot 2: credential helper configured](screenshots/a5-02-credential-helper.png)
+
+Authentication is handled by Git Credential Manager over HTTPS. Credentials are stored by Windows Credential Manager rather than written into any file, so no Personal Access Token is ever displayed, saved in the repository, or exposed in a screenshot.
 
 ---
 
@@ -48,7 +52,9 @@ Clone your fork locally, then add the original repository as `upstream`.
 
 #### Screenshot 3 — Output of `git remote -v` showing `origin` pointing to your fork and `upstream` pointing to `pravinmishraaws/devops-micro-internship-interviews`
 
-Add your screenshot here.
+![Screenshot 3: remotes configured](screenshots/a5-03-remotes.png)
+
+Two remotes: origin points at my fork, which I can push to, and upstream points at the original repository, which I can only read from. That split is what makes the fork workflow safe.
 
 ---
 
@@ -62,13 +68,17 @@ Create the branch `feature-readme-update`, add only your own entry (`Full Name �
 
 #### Screenshot 4 — Output of `git status` showing `pull_request.md` modified before staging
 
-Add your screenshot here.
+![Screenshot 4: pull_request.md modified](screenshots/a5-04-status-modified.png)
+
+Only pull_request.md is modified, before staging.
 
 ---
 
 #### Screenshot 5 — Output of `git commit`
 
-Add your screenshot here.
+![Screenshot 5: commit created](screenshots/a5-05-commit.png)
+
+Committed with the required message. One file, one line added.
 
 ---
 
@@ -82,13 +92,17 @@ Fetch and merge `upstream/main` into your local default branch, rebase your feat
 
 #### Screenshot 6 — Output of `git push -u origin feature-readme-update` showing a successful push
 
-Add your screenshot here.
+![Screenshot 6: branch pushed](screenshots/a5-06-push.png)
+
+Merging upstream/main reported already up to date and the rebase was clean, since the fork was current. The feature branch pushed to my fork and is now tracking origin.
 
 ---
 
 #### Screenshot 7 — Your fork on GitHub showing `feature-readme-update` in the branch selector or a "Compare & pull request" banner
 
-Add your screenshot here.
+![Screenshot 7: feature branch on GitHub](screenshots/a5-07-branch-on-github.png)
+
+The branch selector on my fork lists both main and feature-readme-update, confirming the push arrived.
 
 ---
 
@@ -102,13 +116,17 @@ Open a Pull Request from `feature-readme-update` on your fork to `main` on the u
 
 #### Screenshot 8 — Pull Request creation page showing the correct base repository, base branch, head repository, compare branch, and title
 
-Add your screenshot here.
+![Screenshot 8: compare view before merge](screenshots/a5-08-pr-creation.png)
+
+The comparison shows the correct configuration: base repository pravinmishraaws, base main, head repository gbadedata, compare feature-readme-update. It also confirms one changed file with one addition and zero deletions, which proves no other student's entry was touched.
 
 ---
 
 #### Screenshot 9 — Successfully created Pull Request page with the PR number visible
 
-Add your screenshot here.
+![Screenshot 9: pull request created](screenshots/a5-09-pr-created.png)
+
+Pull request #333 opened against the upstream repository. One CI check is failing, but it validates interview question files and index tables that my change never touches, so it was already failing before this pull request. The branch itself reports no conflicts and can be merged cleanly.
 
 ---
 
@@ -116,7 +134,7 @@ Add your screenshot here.
 
 Paste your Pull Request URL here:
 
-`Add your URL here`
+`https://github.com/pravinmishraaws/devops-micro-internship-interviews/pull/333`
 
 ---
 
@@ -128,13 +146,15 @@ Paste your Pull Request URL here:
 
 Paste your LinkedIn post URL here:
 
-`Add your URL here`
+`https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-devops-agenticai-activity-7485689760557137920-QhT7`
 
 ---
 
 #### Screenshot — LinkedIn post showing your successfully created Pull Request
 
-Add your screenshot here.
+![Screenshot: LinkedIn post](screenshots/a5-10-linkedin-post.png)
+
+The published LinkedIn post with the created pull request attached.
 
 ---
 
@@ -151,21 +171,21 @@ Add your screenshot here.
 
 Paste your fork URL here:
 
-`Add your URL here`
+`https://github.com/gbadedata/devops-micro-internship-interviews`
 
 ---
 
 # Completion Checklist
 
-- [ ] Upstream repository forked to your GitHub account (Screenshot 1)
-- [ ] GitHub authentication configured securely (Screenshot 2)
-- [ ] Fork cloned locally with `origin` and `upstream` configured (Screenshot 3)
-- [ ] Only `pull_request.md` modified, with your own entry added (Screenshots 4–5)
-- [ ] Local default branch synchronized with `upstream/main`, feature branch rebased and pushed (Screenshots 6–7)
-- [ ] Pull Request opened against the correct upstream repository and branch (Screenshots 8–9)
-- [ ] Fork URL and Pull Request URL included
-- [ ] LinkedIn post published and URL submitted
-- [ ] No PAT, password, private key, or authentication secret exposed
+- [x] Upstream repository forked to your GitHub account (Screenshot 1)
+- [x] GitHub authentication configured securely (Screenshot 2)
+- [x] Fork cloned locally with `origin` and `upstream` configured (Screenshot 3)
+- [x] Only `pull_request.md` modified, with your own entry added (Screenshots 4–5)
+- [x] Local default branch synchronized with `upstream/main`, feature branch rebased and pushed (Screenshots 6–7)
+- [x] Pull Request opened against the correct upstream repository and branch (Screenshots 8–9)
+- [x] Fork URL and Pull Request URL included
+- [x] LinkedIn post published and URL submitted
+- [x] No PAT, password, private key, or authentication secret exposed
 
 ---
 
