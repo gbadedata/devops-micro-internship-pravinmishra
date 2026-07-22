@@ -20,13 +20,17 @@ Confirm that you have a working GitHub account and can access your GitHub dashbo
 
 #### Screenshot 1 — GitHub dashboard or Home page showing you're signed in, with your username visible
 
-Add your screenshot here.
+![Screenshot 1: GitHub dashboard signed in](screenshots/a4-01-github-dashboard.png)
+
+Signed in to GitHub as gbadedata. The dashboard shows my account selector, my repositories, and the activity feed from projects and people I follow.
 
 ---
 
 #### Screenshot 2 (Optional but Recommended) — Your GitHub profile with `https://github.com/<username>` visible in the browser address bar
 
-Add your screenshot here.
+![Screenshot 2: profile URL in address bar](screenshots/a4-02-profile-url.png)
+
+My public profile at github.com/gbadedata, with the address bar visible.
 
 ---
 
@@ -40,19 +44,25 @@ Browse Trending, search for a public project, star at least one repository, and 
 
 #### Screenshot 3 — GitHub Trending page visible in the browser
 
-Add your screenshot here.
+![Screenshot 3: GitHub Trending](screenshots/a4-03-trending.png)
+
+The Trending page, which shows what the GitHub community is engaging with today. Useful for spotting active tooling rather than guessing what is current.
 
 ---
 
 #### Screenshot 4 — A repository page showing the Star button in the Starred state
 
-Add your screenshot here.
+![Screenshot 4: repository starred](screenshots/a4-04-starred.png)
+
+Starred koala73/worldmonitor. The button now reads Starred with a filled star, so the repository is saved to my account and easy to find again.
 
 ---
 
 #### Screenshot 5 — Your forked repository page with your username and repository name visible in the URL
 
-Add your screenshot here.
+![Screenshot 5: forked repository](screenshots/a4-05-forked-repo.png)
+
+Forked rohitg00/ai-engineering-from-scratch into my own account. The URL shows gbadedata as the owner, and the forked from line records where it came from. A fork is my own copy, so I can commit to it freely without affecting the original.
 
 ---
 
@@ -66,7 +76,9 @@ Add a professional bio to your GitHub profile — and optionally your location, 
 
 #### Screenshot 6 — Your public GitHub profile showing your username and professional bio
 
-Add your screenshot here.
+![Screenshot 6: profile with professional bio](screenshots/a4-06-profile-bio.png)
+
+My updated profile showing the username gbadedata and a professional bio covering DevOps, Data Engineering, Data Science, and Bioinformatics, along with my location and links to my blog and LinkedIn.
 
 ---
 
@@ -82,19 +94,19 @@ Add your screenshot here.
 
 Paste your GitHub profile URL here:
 
-`Add your URL here`
+`https://github.com/gbadedata`
 
 ---
 
 # Completion Checklist
 
-- [ ] GitHub account created or existing account confirmed (Screenshot 1)
-- [ ] Trending repositories explored (Screenshot 3)
-- [ ] At least one repository starred (Screenshot 4)
-- [ ] At least one public repository forked (Screenshot 5)
-- [ ] Professional bio added to your GitHub profile (Screenshot 6)
-- [ ] GitHub profile URL included
-- [ ] No passwords, codes, or authentication secrets exposed
+- [x] GitHub account created or existing account confirmed (Screenshot 1)
+- [x] Trending repositories explored (Screenshot 3)
+- [x] At least one repository starred (Screenshot 4)
+- [x] At least one public repository forked (Screenshot 5)
+- [x] Professional bio added to your GitHub profile (Screenshot 6)
+- [x] GitHub profile URL included
+- [x] No passwords, codes, or authentication secrets exposed
 
 ---
 
