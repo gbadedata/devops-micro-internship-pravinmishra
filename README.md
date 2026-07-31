@@ -135,7 +135,7 @@ This is not a course. It is an internship-style program — real deployments, re
 | 02 | Agentic AI with Claude Code | ✅ Completed | ✅ Solved | [LinkedIn](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-agenticai-claudecode-activity-7481465385934897152-uZMg) | [Blog](https://gbadedata.hashnode.dev/claude-code-persistent-memory) |
 | 03 | Linux & Bash for DevOps | ✅ Completed | ✅ Solved | [LinkedIn](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-devops-linux-activity-7483962190299906048-k4yL) | [Blog](https://gbadedata.hashnode.dev/i-was-wrong-three-times-about-my-own-server) |
 | 04 | Git & GitHub | ✅ Completed | ✅ Solved | [LinkedIn](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-devops-agenticai-activity-7485721751016960001-369E) | [Blog](https://gbadedata.hashnode.dev/the-commit-my-own-git-pre-commit-hook-rejected) |
-| 05 | DevOps Lifecycle & Agile | ⬜ Not Started | ⏳ Pending | — | — |
+| 05 | DevOps Lifecycle & Agile | 🔄 In Progress | ✅ Solved | — | [Blog](https://gbadedata.hashnode.dev/jira-has-two-things-called-projects) |
 | 06 | AWS Cloud | ⬜ Not Started | ⏳ Pending | — | — |
 | 07 | Azure Cloud | ⬜ Not Started | ⏳ Pending | — | — |
 | 08 | Terraform | ⬜ Not Started | ⏳ Pending | — | — |
