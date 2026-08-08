@@ -50,7 +50,7 @@ Start the web server and confirm the Mini Finance website is accessible through 
 
 #### Screenshot 1 — Browser showing the Mini Finance website running at the EC2 public IP
 
-Add your screenshot here.
+![Mini Finance website loaded in the browser at the EC2 public IP](./screenshots/a3-01-mini-finance-live.png)
 
 ---
 
@@ -58,7 +58,13 @@ Add your screenshot here.
 
 Paste the public IP address of your EC2 instance here (e.g. `http://3.91.105.10`):
 
-`Add your URL here`
+`http://35.179.116.145`
+
+### Deployment summary
+
+I launched an Ubuntu 24.04 t3.micro instance in a public subnet of the default VPC in eu-west-2, with a security group allowing HTTP on port 80 from anywhere and SSH on port 22 restricted to my own IP address rather than the whole internet. After connecting over SSH I installed Nginx, enabled it to start on boot, then cloned the Mini Finance repository and copied the site files into the web root at /var/www/html.
+
+Two details mattered. I deleted Nginx's default index.nginx-debian.html first, because the default server block lists several index filenames and leaving the Ubuntu placeholder in place risks it being served instead of the real homepage. I also removed the repository's README, template notes, and git tracking summary from the web root, since those are repository files rather than website content and serving them publicly exposes internal detail for no benefit. Before opening a browser I checked the deployment locally with curl against localhost, which returned 200 and confirmed that any remaining failure would be a network or security group problem rather than a web server one.
 
 ---
 
@@ -72,13 +78,13 @@ Paste the public IP address of your EC2 instance here (e.g. `http://3.91.105.10`
 
 # Completion Checklist
 
-- [ ] EC2 instance launched in a public subnet with SSH (22) and HTTP (80) allowed
-- [ ] Connected to the instance via SSH
-- [ ] Web server (Nginx or Apache) installed
-- [ ] Mini Finance repository cloned and files copied to the web server root
-- [ ] Web server started and website verified in the browser (Screenshot 1)
-- [ ] EC2 Public IP URL included
-- [ ] No sensitive data exposed
+- [x] EC2 instance launched in a public subnet with SSH (22) and HTTP (80) allowed
+- [x] Connected to the instance via SSH
+- [x] Web server (Nginx or Apache) installed
+- [x] Mini Finance repository cloned and files copied to the web server root
+- [x] Web server started and website verified in the browser (Screenshot 1)
+- [x] EC2 Public IP URL included
+- [x] No sensitive data exposed
 
 ---
 
