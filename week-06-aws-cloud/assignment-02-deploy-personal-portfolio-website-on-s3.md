@@ -20,7 +20,7 @@ Download or clone the portfolio website template from GitHub and confirm `index.
 
 #### Screenshot 1 — File Explorer or terminal showing the template folder contents with `index.html` visible
 
-Add your screenshot here.
+![Terminal showing the cloned template folder with index.html present](./screenshots/a2-01-template-files.png)
 
 ---
 
@@ -34,7 +34,7 @@ Create a globally unique S3 bucket in your chosen AWS region.
 
 #### Screenshot 2 — S3 bucket created screen showing the bucket name and region
 
-Add your screenshot here.
+![S3 bucket created in eu-west-2 showing the bucket name and region](./screenshots/a2-02-bucket-created.png)
 
 ---
 
@@ -48,7 +48,7 @@ Upload the contents of the template folder (not the folder itself) so `index.htm
 
 #### Screenshot 3 — S3 bucket Objects view showing `index.html` at the root level
 
-Add your screenshot here.
+![S3 Objects view showing index.html at the bucket root](./screenshots/a2-03-objects-uploaded.png)
 
 ---
 
@@ -62,7 +62,13 @@ Enable S3 Static Website Hosting with `index.html` as the index document and `er
 
 #### Screenshot 4 — Static website hosting enabled screen showing the website endpoint
 
-Add your screenshot here.
+![Static website hosting enabled showing the generated website endpoint](./screenshots/a2-04-static-hosting-enabled.png)
+
+#### Additional evidence — Website endpoint tested before the bucket policy was applied
+
+![403 AccessDenied returned by the website endpoint before the bucket policy existed](./screenshots/a2-05-403-before-policy.png)
+
+Loading the website endpoint at this point returned a 403 AccessDenied, and the page showed two stacked errors. The first was the request for `index.html` being refused. The second was S3 trying to fall back to the configured error document and being refused as well, because `error.html` is just another object in the same bucket with no public read permission. This confirmed that enabling static website hosting only tells S3 which file to serve, and grants nobody permission to read it. That is what the bucket policy in Task 5 does.
 
 ---
 
@@ -76,7 +82,7 @@ Adjust Block Public Access settings and save a bucket policy that grants public 
 
 #### Screenshot 5 — Bucket policy page showing the policy saved successfully, with the bucket name visible
 
-Add your screenshot here.
+![Bucket policy saved successfully on the Permissions tab](./screenshots/a2-06-bucket-policy.png)
 
 ---
 
@@ -90,7 +96,9 @@ Load the site through the S3 website endpoint and confirm the homepage, images, 
 
 #### Screenshot 6 — Browser showing the live website with the S3 website endpoint visible in the address bar
 
-Add your screenshot here.
+![Live portfolio site loading through the S3 website endpoint](./screenshots/a2-07-website-live.png)
+
+**Live S3 Website Endpoint:** http://pravin-portfolio-oluwagbade-eu-west-2.s3-website.eu-west-2.amazonaws.com
 
 ---
 
@@ -104,7 +112,7 @@ Edit a small visible detail, re-upload it to S3, and confirm the change appears 
 
 #### Screenshot 7 (optional) — Before/after view, or a browser view showing the updated text
 
-Add your screenshot here.
+![Updated homepage live after re-uploading index.html](./screenshots/a2-08-updated-live.png)
 
 ---
 
@@ -118,15 +126,15 @@ Add your screenshot here.
 
 # Completion Checklist
 
-- [ ] Task 1: Template downloaded/cloned with `index.html` confirmed (Screenshot 1)
-- [ ] Task 2: Globally unique S3 bucket created (Screenshot 2)
-- [ ] Task 3: Website files uploaded with `index.html` at bucket root (Screenshot 3)
-- [ ] Task 4: Static website hosting enabled (Screenshot 4)
-- [ ] Task 5: Public-read bucket policy saved (Screenshot 5)
-- [ ] Task 6: Live website verified through the S3 website endpoint (Screenshot 6)
-- [ ] Task 7: Optional small update re-uploaded and verified (Screenshot 7)
-- [ ] S3 Website Endpoint URL included
-- [ ] No sensitive account information exposed
+- [x] Task 1: Template downloaded/cloned with `index.html` confirmed (Screenshot 1)
+- [x] Task 2: Globally unique S3 bucket created (Screenshot 2)
+- [x] Task 3: Website files uploaded with `index.html` at bucket root (Screenshot 3)
+- [x] Task 4: Static website hosting enabled (Screenshot 4)
+- [x] Task 5: Public-read bucket policy saved (Screenshot 5)
+- [x] Task 6: Live website verified through the S3 website endpoint (Screenshot 6)
+- [x] Task 7: Optional small update re-uploaded and verified (Screenshot 7)
+- [x] S3 Website Endpoint URL included
+- [x] No sensitive account information exposed
 
 ---
 
