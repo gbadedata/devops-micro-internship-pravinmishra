@@ -36,22 +36,18 @@ You must tag **Pravin Mishra**, your **Lead Co-Mentor** and your **Group Co-Ment
 
 **Group 1**
 
-* Nkechi Ahanonye [Linkedin profile](https://www.linkedin.com/in/nkechiahanonye/)
 * Tanisha Borana [Linkedin profile](https://www.linkedin.com/in/tanisha-borana-552797233/)
 * Anuradha Iyer [Linkedin profile](https://www.linkedin.com/in/iyeranuradha/)
 
 **Group 2**
 
 * Anjana Muthunayake [Linkedin profile](https://www.linkedin.com/in/anjana-muthunayake/)
-* Faith Samson [Linkedin profile](https://www.linkedin.com/in/faith-samson-nigo/)
 * Joy Ukpabi [Linkedin profile](https://www.linkedin.com/in/joyukpabi/)
-* Rukevwe Ubioworo [Linkedin profile](https://www.linkedin.com/in/ubioworoisaiah/)
 
 **Group 3**
 
 * Bhupendra Bhati [Linkedin profile](https://www.linkedin.com/in/bhupendrabhati/)
 * Ranbir Kaur [Linkedin profile](https://www.linkedin.com/in/ranbirkaur/)
-* Greg Odi [Linkedin profile](https://www.linkedin.com/in/gregodi/)
 
 ---
 
@@ -97,7 +93,9 @@ Use commas instead of dots:
 
 Every LinkedIn post MUST end with this:
 
-> **P.S. This post is a part of DevOps Micro Internship with Agentic AI Cohort-3 by [Pravin Mishra](https://www.linkedin.com/in/pravin-mishra-aws-trainer/). You can start your DevOps journey by joining this Discord community: [https://discord.pravinmishra.com/](https://discord.pravinmishra.com/)**
+> **P.S. This post is part of the DevOps Micro Internship (DMI) with Agentic AI — Cohort 3 — by [Pravin Mishra](https://www.linkedin.com/in/pravin-mishra-aws-trainer/). My graded progress is public: https://dmi.pravinmishra.com/s/YOUR-GITHUB-USERNAME.html · Start your DevOps journey: https://dmi.pravinmishra.com/?utm_source=student&utm_medium=ps-linkedin&utm_campaign=cohort3**
+>
+> *(Replace `YOUR-GITHUB-USERNAME` with your GitHub username.)*
 >
 >#DMIByPravinMishra #DevOps #AgenticAI
 
