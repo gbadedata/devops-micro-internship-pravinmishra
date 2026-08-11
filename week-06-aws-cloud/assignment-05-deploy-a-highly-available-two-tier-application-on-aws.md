@@ -278,13 +278,13 @@ Publish a LinkedIn post about the high-availability build, including the ALB URL
 
 Paste your LinkedIn post URL here:
 
-`Add your URL here`
+`https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-activity-7492753368952700928-U8qv`
 
 ---
 
 #### Screenshot — Published LinkedIn post
 
-TODO_LINKEDIN_SCREENSHOT
+![Published LinkedIn post covering the high availability build and the three failure tests](./screenshots/a5-24-linkedin-post.png)
 
 ---
 
@@ -297,17 +297,17 @@ TODO_LINKEDIN_SCREENSHOT
 
 # Completion Checklist
 
-- [ ] Task 1: VPC, four subnets, IGW, NAT Gateway, and route tables created (Screenshots 1–5)
-- [ ] Task 2: Least-privilege ALB, EC2, and RDS security groups created (Screenshots 6–8)
-- [ ] Task 3: Private Multi-AZ RDS created (Screenshots 9–10)
-- [ ] Task 4: Self-configuring Launch Template created and tested (Screenshots 11–12)
-- [ ] Task 5: ALB created across both public subnets (Screenshots 13–14)
-- [ ] Task 6: Auto Scaling Group running two instances across two AZs (Screenshots 15–16)
-- [ ] Task 7: Application verified through the ALB with a database read and write (Screenshots 17–18)
-- [ ] Task 8: Both high-availability tests completed (Screenshots 19–22)
-- [ ] Task 9: Architecture and test-results summary completed (Screenshot 23 & Notes)
-- [ ] LinkedIn post published and URL submitted
-- [ ] No sensitive data exposed
+- [x] Task 1: VPC, four subnets, IGW, NAT Gateway, and route tables created (Screenshots 1–5)
+- [x] Task 2: Least-privilege ALB, EC2, and RDS security groups created (Screenshots 6–8)
+- [x] Task 3: Private Multi-AZ RDS created (Screenshots 9–10)
+- [x] Task 4: Self-configuring Launch Template created and tested (Screenshots 11–12)
+- [x] Task 5: ALB created across both public subnets (Screenshots 13–14)
+- [x] Task 6: Auto Scaling Group running two instances across two AZs (Screenshots 15–16)
+- [x] Task 7: Application verified through the ALB with a database read and write (Screenshots 17–18)
+- [x] Task 8: Both high-availability tests completed (Screenshots 19–22)
+- [x] Task 9: Architecture and test-results summary completed (Screenshot 23 & Notes)
+- [x] LinkedIn post published and URL submitted
+- [x] No sensitive data exposed
 
 ---
 
