@@ -136,7 +136,7 @@ This is not a course. It is an internship-style program — real deployments, re
 | 03 | Linux & Bash for DevOps | ✅ Completed | ✅ Solved | [LinkedIn](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-devops-linux-activity-7483962190299906048-k4yL) | [Blog](https://gbadedata.hashnode.dev/i-was-wrong-three-times-about-my-own-server) |
 | 04 | Git & GitHub | ✅ Completed | ✅ Solved | [LinkedIn](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-devops-agenticai-activity-7485721751016960001-369E) | [Blog](https://gbadedata.hashnode.dev/the-commit-my-own-git-pre-commit-hook-rejected) |
 | 05 | DevOps Lifecycle & Agile | ✅ Completed | ✅ Solved | [LinkedIn](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-devops-agile-activity-7489039632316207105-4OJN) | [Blog](https://gbadedata.hashnode.dev/jira-has-two-things-called-projects) |
-| 06 | AWS Cloud | ✅ Completed | ✅ Solved | [LinkedIn](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-activity-7492753368952700928-U8qv) | [Blog](https://gbadedata.hashnode.dev/my-servers-passed-every-health-check-none-of-them-worked) |
+| 06 | AWS Cloud | ✅ Completed | ✅ Solved | [LinkedIn](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-activity-7492753368952700928-U8qv) | [Blog](https://gbadedata.hashnode.dev/my-servers-passed-every-health-check-none-of-them-worked), [Blog 2](https://gbadedata.hashnode.dev/the-audit-script-i-wrote-reported-eight-problems) |
 | 07 | Azure Cloud | ⬜ Not Started | ⏳ Pending | — | — |
 | 08 | Terraform | ⬜ Not Started | ⏳ Pending | — | — |
 | 09 | Ansible | ⬜ Not Started | ⏳ Pending | — | — |
