@@ -1,0 +1,22 @@
+========================================
+AWS Security and Cost Audit Report
+========================================
+Full Name: Oluwagbade Odimayo
+Timestamp: 2026-08-11T14:49:47Z
+AWS Region: eu-west-2
+S3 Bucket: pravin-portfolio-oluwagbade-eu-west-2
+RDS Instance: bra-db
+
+[PASS] S3 bucket 'pravin-portfolio-oluwagbade-eu-west-2' blocks and ignores public ACLs (public read, if any, comes only from its scoped bucket policy)
+[PASS] No security group allows SSH (port 22) from 0.0.0.0/0
+[PASS] No security group allows MySQL (port 3306) from 0.0.0.0/0
+[PASS] RDS instance 'bra-db' is not publicly accessible
+[WARN] 3 EBS volume(s) are not encrypted
+
+Summary:
+PASS: 4
+WARN: 1
+FAIL: 0
+Overall Status: WARN
+Script Exit Code: 1
+Report File: /home/gbadedata/week-06-aws-audit/reports/aws-audit-report.txt
