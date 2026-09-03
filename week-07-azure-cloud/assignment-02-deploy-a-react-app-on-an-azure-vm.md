@@ -20,7 +20,7 @@ Create the Azure Resource Group `react-app-rg` in a region close to you.
 
 #### Screenshot 1 — Resource Group overview showing the name and region
 
-Add your screenshot here.
+![Screenshot 1 - Resource Group react-app-rg in UK South](./screenshots/a2-01-resource-group.png)
 
 ---
 
@@ -34,13 +34,13 @@ Create an Ubuntu 20.04 LTS VM (size B1s) with a Network Security Group allowing 
 
 #### Screenshot 2 — Azure VM overview page showing the VM name, Resource Group, and region
 
-Add your screenshot here.
+![Screenshot 2 - react-app-vm overview showing name, resource group and region](./screenshots/a2-02-vm-overview.png)
 
 ---
 
 #### Screenshot 3 — Network Security Group inbound rules showing ports 22 and 80 allowed
 
-Add your screenshot here.
+![Screenshot 3 - NSG inbound rules allowing ports 22 and 80](./screenshots/a2-03-nsg-rules.png)
 
 ---
 
@@ -54,7 +54,7 @@ Connect to the VM over SSH and confirm the Linux prompt is visible.
 
 #### Screenshot 4 — Terminal showing a successful SSH login with the prompt visible
 
-Add your screenshot here.
+![Screenshot 4 - Successful SSH login to react-app-vm](./screenshots/a2-04-ssh-login.png)
 
 ---
 
@@ -68,7 +68,7 @@ Update Ubuntu and install Git, Node.js, and npm.
 
 #### Screenshot 5 — Terminal output showing `node -v` and `npm -v`
 
-Add your screenshot here.
+![Screenshot 5 - Node.js and npm versions](./screenshots/a2-05-node-npm-versions.png)
 
 ---
 
@@ -82,7 +82,7 @@ Clone `my-react-app`, install dependencies, and run `npm run build` to produce t
 
 #### Screenshot 6 — Terminal showing successful `npm run build` completion and `ls -la build` output
 
-Add your screenshot here.
+![Screenshot 6 - Successful npm run build and build directory listing](./screenshots/a2-06-build-output.png)
 
 ---
 
@@ -96,13 +96,13 @@ Install Nginx and configure it to serve the `build/` directory with `try_files $
 
 #### Screenshot 7 — Successful `sudo nginx -t` output
 
-Add your screenshot here.
+![Screenshot 7 - nginx -t syntax check passing](./screenshots/a2-07-nginx-test.png)
 
 ---
 
 #### Screenshot 8 — Nginx configuration snippet showing the build root and `try_files` directive
 
-Add your screenshot here.
+![Screenshot 8 - Nginx config showing build root and try_files](./screenshots/a2-08-nginx-config.png)
 
 ---
 
@@ -116,7 +116,11 @@ Confirm the React app loads through the VM's public IP, navigation works, and a 
 
 #### Screenshot 9 — Browser showing the React app with the public IP visible in the address bar
 
-Add your screenshot here.
+![Screenshot 9 - React app served from the VM public IP](./screenshots/a2-09-browser-live.png)
+
+**SPA routing verification:** This app has no client-side router, so there are no nested links to click. Requesting a path directly tests the same behaviour that the `try_files $uri /index.html;` directive exists for. The screenshot below shows `/test-route` returning the application rather than a 404, which confirms Nginx falls back to `index.html` instead of looking for a file that does not exist.
+
+![Screenshot 9b - Direct request to /test-route served by SPA fallback](./screenshots/a2-10-spa-route-refresh.png)
 
 ---
 
@@ -130,7 +134,11 @@ Restrict the SSH Network Security Group rule to your IP if not already restricte
 
 #### Screenshot 10 (optional) — Network Security Group rule showing SSH restricted to your IP
 
-Add your screenshot here.
+![Screenshot 10 - NSG rule with SSH restricted to a single IP](./screenshots/a2-11-ssh-hardened.png)
+
+**Firewall check:** `sudo ufw status` on the VM returns `Status: inactive`, so nothing at the OS level blocks port 80. Inbound traffic is controlled entirely by the Network Security Group, where port 80 stays open to the internet and port 22 is now limited to a single source address.
+
+**Note on the Ubuntu 20.04 image:** Canonical no longer lists plain Ubuntu Server 20.04 LTS in the Azure Portal Marketplace gallery. Searching there returns only Ubuntu Pro 20.04, which is a metered paid image, alongside third-party republished images from other publishers. The free Canonical image is still present in the platform and was confirmed with `az vm image list-skus --location uksouth --publisher Canonical --offer 0001-com-ubuntu-server-focal`, which returns `20_04-lts` and `20_04-lts-gen2`. `az vm image show` reported `"plan": null` for that URN, confirming no licence charge. The VM was therefore created by referencing the image URN directly rather than selecting it from the portal gallery, and `lsb_release -d` on the running VM reports `Ubuntu 20.04.6 LTS` as required.
 
 ---
 
