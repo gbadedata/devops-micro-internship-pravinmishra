@@ -50,7 +50,13 @@ Open the primary endpoint URL and confirm the Mini Finance application, styling,
 
 #### Screenshot 1 — Mini Finance website running in the browser
 
-Add your screenshot here.
+![Screenshot 1 - Mini Finance served from the Azure Storage static website endpoint](./screenshots/a4-01-mini-finance-live.png)
+
+The page renders with full styling, chart rendering and images, which confirms the CSS, JS, fonts and image directories all uploaded with their paths intact.
+
+**A note on uploading:** the portal's Upload dialog does not recursively upload directories, so selecting the files from the repository folder produced a flat set of HTML files with no assets, and the site rendered unstyled. Uploading with `az storage blob upload-batch` preserved the directory structure that the relative paths in `index.html` depend on.
+
+Two further points came out of that. Subscription-level Owner does not grant data-plane access to blobs, so `--auth-mode login` was rejected and an account key was needed instead. Management-plane and data-plane permissions in Azure Storage are separate RBAC layers. And uploading the repository folder wholesale also pushed the `.git` directory to a public endpoint, exposing the remote URL in `.git/config` and the full history in the pack files. That was removed with `az storage blob delete-batch --pattern ".git/*"`, and `--exclude-pattern` would prevent it on a repeat run.
 
 ---
 
@@ -58,7 +64,7 @@ Add your screenshot here.
 
 Paste the Azure Storage static website URL here:
 
-`Add your URL here`
+`https://minifinancegbade.z33.web.core.windows.net/`
 
 ---
 
