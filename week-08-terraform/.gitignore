@@ -1,0 +1,11 @@
+# Terraform working files and state (state can contain secrets)
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+tfplan
+*.tfplan
+reports/tfplan*
+# Secrets: passwords go in TF_VAR_ env vars, never in committed tfvars
+*.secret.tfvars
+*.pem
