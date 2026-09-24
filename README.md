@@ -138,7 +138,7 @@ This is not a course. It is an internship-style program — real deployments, re
 | 05 | DevOps Lifecycle & Agile | ✅ Completed | ✅ Solved | [LinkedIn](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-devops-agile-activity-7489039632316207105-4OJN) | [Blog](https://gbadedata.hashnode.dev/jira-has-two-things-called-projects) |
 | 06 | AWS Cloud | ✅ Completed | ✅ Solved | [LinkedIn](https://www.linkedin.com/posts/oluwagbade-odimayo-_dmibypravinmishra-activity-7492753368952700928-U8qv) | [Blog](https://gbadedata.hashnode.dev/my-servers-passed-every-health-check-none-of-them-worked), [Blog 2](https://gbadedata.hashnode.dev/the-audit-script-i-wrote-reported-eight-problems) |
 | 07 | Azure Cloud | ✅ Completed | ✅ Solved | — | [Blog](https://gbadedata.hashnode.dev/azure-deleted-my-subnet-twice-eight-defaults-that-quietly-break-deployments) |
-| 08 | Terraform | ✅ Completed | ✅ Solved | — | [Blog](https://gbadedata.hashnode.dev/terraform-plan-wrong-aws-account) |
+| 08 | Terraform | ✅ Completed | ✅ Solved | — | [Blog](https://gbadedata.hashnode.dev/terraform-plan-wrong-aws-account), [Blog 2](https://gbadedata.hashnode.dev/terraform-ai-capstone-valid-is-not-working) |
 | 09 | Ansible | ⬜ Not Started | ⏳ Pending | — | — |
 | 10 | Azure DevOps (CI/CD) | ⬜ Not Started | ⏳ Pending | — | — |
 | 11 | Docker | ⬜ Not Started | ⏳ Pending | — | — |
