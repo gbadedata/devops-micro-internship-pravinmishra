@@ -1,0 +1,14 @@
+==================================================
+ Terraform Drift and Policy Review
+==================================================
+Reviewer      : Oluwagbade Odimayo
+Generated     : 2026-09-24 10:40:27 UTC
+Terraform dir : week-08-terraform/terraform-aws-vm
+Plan JSON     : reports/tfplan.json
+--------------------------------------------------
+[WARN] check_terraform_plan: Changes pending (plan exit code 2). Plan: 0 to add, 1 to change, 0 to destroy.
+[PASS] check_destructive_actions: No delete or replace actions in the plan.
+[FAIL] check_open_ingress: Unsafe ingress: aws_security_group.web allows tcp ports 22-22 from the internet
+--------------------------------------------------
+Overall Status: FAIL
+Read-only review: any terraform apply is a human decision.

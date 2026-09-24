@@ -5,7 +5,12 @@
 crash.log
 tfplan
 *.tfplan
-reports/tfplan*
+**/reports/tfplan*
+**/reports/plan-output.log
+**/reports/latest-report.txt
+**/.claude/settings.local.json
 # Secrets: passwords go in TF_VAR_ env vars, never in committed tfvars
 *.secret.tfvars
 *.pem
+# Local-only variable values (e.g. home IP)
+*.auto.tfvars

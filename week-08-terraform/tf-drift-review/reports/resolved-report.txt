@@ -1,0 +1,14 @@
+==================================================
+ Terraform Drift and Policy Review
+==================================================
+Reviewer      : Oluwagbade Odimayo
+Generated     : 2026-09-24 11:11:04 UTC
+Terraform dir : week-08-terraform/terraform-aws-vm
+Plan JSON     : not created (no pending changes, or plan error)
+--------------------------------------------------
+[PASS] check_terraform_plan: No changes. Infrastructure matches the configuration (plan exit code 0).
+[PASS] check_destructive_actions: No plan JSON (no pending changes), so nothing will be deleted.
+[PASS] check_open_ingress: No plan JSON (no pending changes), so no ingress changes.
+--------------------------------------------------
+Overall Status: HEALTHY
+Read-only review: any terraform apply is a human decision.
