@@ -92,6 +92,24 @@ variable "db_username" {
   }
 }
 
+variable "public_key_path" {
+  description = "Path to the SSH public key registered for web-tier access. Only the public key is ever read."
+  type        = string
+  default     = "~/.ssh/id_rsa.pub"
+}
+
+variable "repo_url" {
+  description = "Git URL of the Book Review App repository."
+  type        = string
+  default     = "https://github.com/pravinmishraaws/book-review-app.git"
+}
+
+variable "repo_ref" {
+  description = "Git ref (commit SHA recommended) to deploy."
+  type        = string
+  default     = "84280063bea7ccd5144dafa2b969ec4e2e69ffbb"
+}
+
 variable "jwt_secret" {
   description = "Backend JWT signing secret, supplied via TF_VAR_jwt_secret. Never given a default."
   type        = string
