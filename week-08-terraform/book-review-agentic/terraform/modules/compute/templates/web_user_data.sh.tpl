@@ -65,6 +65,8 @@ server {
     listen 80 default_server;
     server_name _;
 
+    rewrite ^/api(/api/.*)$ $1 last;
+
     location /api/ {
         set $api_upstream http://${internal_alb_dns_name};
         proxy_pass $api_upstream;

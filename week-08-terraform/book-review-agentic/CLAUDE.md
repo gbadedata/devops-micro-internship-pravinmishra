@@ -122,6 +122,7 @@ Facts below were verified in the application repository. Use them instead of gue
 ### Application facts
 - Frontend: Next.js 15 in `frontend/`. Build with `npm ci && npm run build`, serve with `npm start` on port 3000.
 - `NEXT_PUBLIC_API_URL` is baked in at build time and used by browser-side code. Set it to `/api` (relative): the browser calls the public load balancer, and Web Tier Nginx proxies `/api/` to the internal load balancer. Backend routes are mounted under `/api/...`, so the value must include `/api` despite the code comment in `frontend/src/services/api.js`.
+- `frontend/src/app/page.js` appends `/api` itself (`${NEXT_PUBLIC_API_URL}/api/books`), unlike `api.js`, so the homepage requests `/api/api/books`; the Web Tier Nginx collapses `/api/api/` with a server-level `rewrite ^/api(/api/.*)$ $1 last;` (inside `location /api/` it fails). Do not change `NEXT_PUBLIC_API_URL` to work around it.
 - Backend: Express in `backend/`, started with `node src/server.js`. Environment: `PORT=3001`, `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASS`, `JWT_SECRET`, `ALLOWED_ORIGINS`. The committed `backend/.env` holds placeholder secrets and must be replaced on the server.
 - Backend CORS rejects unknown origins: `ALLOWED_ORIGINS` must include `http://<public load balancer DNS>`.
 - Backend connects to MySQL with SSL required (`dialectOptions.ssl` in `backend/src/config/db.js`). Keep it.
