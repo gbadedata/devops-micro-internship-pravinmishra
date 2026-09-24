@@ -33,6 +33,13 @@ variable "name_prefix" {
   description = "Prefix applied to resource Name tags for consistent naming."
   type        = string
   default     = "oluwagbade-bookreview"
+
+  # ALB and target group names are limited to 32 characters and the longest
+  # suffix appended is 8 ("-alb-pub"), so the prefix is capped at 21.
+  validation {
+    condition     = can(regex("^[a-z][a-z0-9-]{0,20}$", var.name_prefix))
+    error_message = "name_prefix must be 1-21 characters of lowercase letters, digits and hyphens, starting with a letter."
+  }
 }
 
 variable "vpc_cidr" {
@@ -71,6 +78,17 @@ variable "db_password" {
   validation {
     condition     = !can(regex("[/@\" ]", var.db_password))
     error_message = "db_password must not contain /, @, \" or spaces (RDS restriction)."
+  }
+}
+
+variable "db_username" {
+  description = "MySQL master username for the primary RDS instance. Not a secret."
+  type        = string
+  default     = "bookreview_app"
+
+  validation {
+    condition     = can(regex("^[a-zA-Z][a-zA-Z0-9_]{0,15}$", var.db_username))
+    error_message = "db_username must start with a letter and be 1-16 alphanumeric/underscore characters (RDS MySQL master username limit)."
   }
 }
 

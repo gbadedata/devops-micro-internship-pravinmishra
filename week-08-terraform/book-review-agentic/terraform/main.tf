@@ -26,3 +26,13 @@ module "load_balancer" {
   alb_public_sg_id   = module.security.alb_public_sg_id
   alb_internal_sg_id = module.security.alb_internal_sg_id
 }
+
+module "database" {
+  source = "./modules/database"
+
+  name_prefix   = var.name_prefix
+  db_subnet_ids = module.network.db_subnet_ids
+  db_sg_id      = module.security.db_sg_id
+  db_username   = var.db_username
+  db_password   = var.db_password
+}

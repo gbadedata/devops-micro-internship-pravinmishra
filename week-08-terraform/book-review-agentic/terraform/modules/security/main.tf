@@ -92,7 +92,7 @@ resource "aws_vpc_security_group_ingress_rule" "web_ssh_in" {
   from_port         = 22
   to_port           = 22
   ip_protocol       = "tcp"
-  description       = "Allow SSH from the owner's IP"
+  description       = "Allow SSH from the owner IP"
 }
 
 resource "aws_vpc_security_group_egress_rule" "web_to_alb_internal" {
