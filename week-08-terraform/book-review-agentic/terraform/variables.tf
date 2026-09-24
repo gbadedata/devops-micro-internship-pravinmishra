@@ -22,6 +22,11 @@ variable "my_ip_cidr" {
     condition     = can(cidrhost(var.my_ip_cidr, 0))
     error_message = "my_ip_cidr must be a valid IPv4 CIDR block."
   }
+
+  validation {
+    condition     = endswith(var.my_ip_cidr, "/32")
+    error_message = "my_ip_cidr must be a single IPv4 address in /32 form."
+  }
 }
 
 variable "name_prefix" {
@@ -49,5 +54,34 @@ variable "azs" {
   validation {
     condition     = length(var.azs) == 2 && length(distinct(var.azs)) == 2
     error_message = "azs must contain exactly 2 distinct availability zones."
+  }
+}
+
+variable "db_password" {
+  description = "MySQL master password, supplied via TF_VAR_db_password. Never given a default."
+  type        = string
+  sensitive   = true
+  ephemeral   = true
+
+  validation {
+    condition     = length(var.db_password) >= 12
+    error_message = "db_password must be at least 12 characters long."
+  }
+
+  validation {
+    condition     = !can(regex("[/@\" ]", var.db_password))
+    error_message = "db_password must not contain /, @, \" or spaces (RDS restriction)."
+  }
+}
+
+variable "jwt_secret" {
+  description = "Backend JWT signing secret, supplied via TF_VAR_jwt_secret. Never given a default."
+  type        = string
+  sensitive   = true
+  ephemeral   = true
+
+  validation {
+    condition     = length(var.jwt_secret) >= 32
+    error_message = "jwt_secret must be at least 32 characters long."
   }
 }
