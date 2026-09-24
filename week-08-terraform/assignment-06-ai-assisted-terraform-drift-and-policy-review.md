@@ -487,11 +487,11 @@ Suggested tags:
 
 ### LinkedIn Post URL
 
-Add your LinkedIn post URL here.
+Not published: I chose not to publish a LinkedIn post for this assignment.
 
 ### Published LinkedIn Post Screenshot — Mandatory
 
-Add a screenshot of the published LinkedIn post here.
+Not applicable, as no post was published.
 
 ---
 
