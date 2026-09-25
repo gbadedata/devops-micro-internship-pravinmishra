@@ -20,3 +20,10 @@ id_ed25519*
 # OS and editor noise
 .DS_Store
 Thumbs.db
+
+# Terraform: state can hold secrets; .terraform holds large provider binaries
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+tfplan
