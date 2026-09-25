@@ -1,0 +1,26 @@
+Ansible Change Risk Review
+Reviewer:        Oluwagbade Odimayo
+Generated:       2026-09-25 18:51:41 UTC
+Playbook:        ../ansible/site.yml
+Inventory:       ../ansible/inventory.ini
+Mode:            ansible-playbook --check --diff (dry run, nothing applied)
+Dry-run exit:    0
+Recap:           epicbook                   : ok=20   changed=2    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0
+
+Changed tasks (2):
+    - common : Harden SSH by disabling root login
+    - common : Restart SSH
+
+Risk classification:
+[HIGH] Access and security
+    - common : Harden SSH by disabling root login
+    - common : Restart SSH
+[OK]   Destructive or data change: no matching changes
+[MEDIUM] Service disruption
+    - common : Restart SSH
+[OK]   Configuration or package change: no matching changes
+
+Overall Status:  FAILED
+Exit Code:       2
+Reason:          High-risk change pending. Do not apply without a deliberate human review.
+Decision:        Nothing was applied. A human decides whether to run the playbook.

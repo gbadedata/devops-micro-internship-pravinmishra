@@ -72,6 +72,7 @@
     MYSQL_PWD: "{{ db_password }}"
   register: epicbook_schema_check
   changed_when: false
+  check_mode: false # read-only query; runs even in --check so the dry run can predict the import
 
 - name: Import the schema and seed data (first deployment only)
   ansible.builtin.shell: |
@@ -94,6 +95,7 @@
   register: epicbook_pm2_describe
   changed_when: false
   failed_when: false
+  check_mode: false # read-only; runs even in --check so the dry run can predict a PM2 start
 
 - name: Start EpicBook under PM2
   ansible.builtin.command: pm2 start {{ epicbook_ecosystem_file }}

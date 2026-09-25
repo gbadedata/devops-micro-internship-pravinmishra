@@ -1,0 +1,22 @@
+Ansible Change Risk Review
+Reviewer:        Oluwagbade Odimayo
+Generated:       2026-09-25 19:08:43 UTC
+Playbook:        ../ansible/site.yml
+Inventory:       ../ansible/inventory.ini
+Mode:            ansible-playbook --check --diff (dry run, nothing applied)
+Dry-run exit:    0
+Recap:           epicbook                   : ok=19   changed=0    unreachable=0    failed=0    skipped=5    rescued=0    ignored=0
+
+Changed tasks (0):
+    none
+
+Risk classification:
+[OK]   Access and security: no matching changes
+[OK]   Destructive or data change: no matching changes
+[OK]   Service disruption: no matching changes
+[OK]   Configuration or package change: no matching changes
+
+Overall Status:  HEALTHY
+Exit Code:       0
+Reason:          No task would change. The server matches the playbook.
+Decision:        Nothing was applied. A human decides whether to run the playbook.
