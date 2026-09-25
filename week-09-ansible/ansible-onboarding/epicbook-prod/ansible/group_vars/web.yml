@@ -1,0 +1,21 @@
+---
+# Variables shared by every host in the web group (Oluwagbade Odimayo).
+
+# Application
+app_user: ubuntu
+app_repo: https://github.com/pravinmishraaws/theepicbook.git
+app_version: main
+app_dir: /home/ubuntu/theepicbook
+app_port: 8080
+
+# PM2 process manager
+pm2_app_name: epicbook
+
+# Database (Amazon RDS for MySQL)
+# The endpoint and password are read from the controller's environment at run time,
+# so neither value is ever committed. See README.md for how they are exported.
+db_host: "{{ lookup('ansible.builtin.env', 'EPICBOOK_DB_HOST') }}"
+db_port: 3306
+db_name: bookstore
+db_user: epicbook_admin
+db_password: "{{ lookup('ansible.builtin.env', 'EPICBOOK_DB_PASSWORD') }}"

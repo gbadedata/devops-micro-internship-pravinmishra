@@ -1,0 +1,14 @@
+# Terraform: state can hold secrets (including the RDS password); .terraform holds provider binaries
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+tfplan
+crash.log
+
+# Local-only variables (account ID) and keys must never be committed
+*.auto.tfvars
+*.pem
+*.key
+id_rsa*
+id_ed25519*

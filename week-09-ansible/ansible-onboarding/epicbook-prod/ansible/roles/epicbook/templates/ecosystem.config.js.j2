@@ -1,0 +1,17 @@
+// Managed by Ansible (epicbook role). PM2 process definition for EpicBook.
+// Lives outside the Git checkout, so the repository stays unmodified and reruns stay idempotent.
+// EpicBook's config/config.json "production" entry reads the database URL from JAWSDB_URL.
+module.exports = {
+  apps: [
+    {
+      name: "{{ pm2_app_name }}",
+      cwd: "{{ app_dir }}",
+      script: "server.js",
+      env: {
+        NODE_ENV: "production",
+        PORT: "{{ app_port }}",
+        JAWSDB_URL: "mysql://{{ db_user }}:{{ db_password | urlencode }}@{{ db_host }}:{{ db_port }}/{{ db_name }}"
+      }
+    }
+  ]
+};
