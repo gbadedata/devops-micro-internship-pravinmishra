@@ -22,3 +22,6 @@ repos:
       - id: ansible-lint
         # Upstream hook asks for python3.14; run it on this machine's Python 3.12 instead.
         language_version: python3
+        # Same Ansible package as requirements.txt, so collections like ansible.posix resolve in the hook.
+        additional_dependencies:
+          - ansible==14.4.0

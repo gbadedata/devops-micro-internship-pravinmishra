@@ -1,0 +1,85 @@
+---
+# Mini Finance deployment (Oluwagbade Odimayo).
+# Play 1 installs packages, Play 2 clones and deploys the site with rsync, Play 3 verifies from the controller.
+
+- name: Play 1 - Install Nginx, Git and rsync
+  hosts: web
+  become: true
+  tasks:
+    - name: Install nginx, git and rsync
+      ansible.builtin.apt:
+        name:
+          - nginx
+          - git
+          - rsync
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Ensure Nginx is started and enabled at boot
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+
+- name: Play 2 - Deploy the Mini Finance website
+  hosts: web
+  become: true
+  vars:
+    repo_url: https://github.com/pravinmishraaws/mini_finance.git
+    src_dir: /opt/mini-finance-src
+    web_root: /var/www/html/
+  tasks:
+    - name: Clone the Mini Finance repository
+      ansible.builtin.git:
+        repo: "{{ repo_url }}"
+        dest: "{{ src_dir }}"
+        version: main
+        depth: 1
+
+    - name: Synchronise the site into the web root with rsync
+      ansible.posix.synchronize:
+        src: "{{ src_dir }}/"
+        dest: "{{ web_root }}"
+        delete: true
+        rsync_opts:
+          - "--exclude=.git"
+          - "--exclude=.DS_Store"
+          - "--chown=www-data:www-data"
+      delegate_to: "{{ inventory_hostname }}"
+      notify: Reload Nginx
+
+    - name: Ensure the web root is owned by www-data
+      ansible.builtin.file:
+        path: "{{ web_root }}"
+        state: directory
+        owner: www-data
+        group: www-data
+        mode: "0755"
+
+  handlers:
+    - name: Reload Nginx
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded
+
+- name: Play 3 - Verify the website from the controller
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Request the Mini Finance home page
+      ansible.builtin.uri:
+        url: "http://{{ hostvars[item].ansible_host }}/"
+        status_code: 200
+        return_content: true
+      loop: "{{ groups['web'] }}"
+      register: web_check
+
+    - name: Assert the site returned HTTP 200 with the Mini Finance page
+      ansible.builtin.assert:
+        that:
+          - web_check.results | map(attribute='status') | select('equalto', 200) | list | length == groups['web'] | length
+          - web_check.results | map(attribute='content') | select('search', 'Mini Finance') | list | length == groups['web'] | length
+        success_msg: "HTTP 200 and the Mini Finance page returned by {{ groups['web'] | join(', ') }}"
+        fail_msg: "The Mini Finance site did not return HTTP 200 with the expected page"

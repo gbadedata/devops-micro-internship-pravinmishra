@@ -1,0 +1,14 @@
+# Terraform: state can hold secrets; .terraform holds large provider binaries
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+tfplan
+crash.log
+
+# Local variable files and keys must never be committed
+*.auto.tfvars
+*.pem
+*.key
+id_rsa*
+id_ed25519*
