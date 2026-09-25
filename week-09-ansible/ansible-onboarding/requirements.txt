@@ -1,0 +1,5 @@
+ansible==14.4.0
+ansible-core==2.21.4
+ansible-lint==26.9.0
+pre_commit==4.6.2
+yamllint==1.38.0

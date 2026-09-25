@@ -1,0 +1,5 @@
+# ansible-lint settings for the ansible-onboarding workspace.
+profile: production
+exclude_paths:
+  - .venv/
+  - .ansible/
