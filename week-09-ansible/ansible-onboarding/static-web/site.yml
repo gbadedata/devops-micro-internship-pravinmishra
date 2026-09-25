@@ -1,0 +1,62 @@
+---
+# Multi-play static website deployment (Oluwagbade Odimayo).
+# Play 1 installs Nginx, Play 2 deploys the site, Play 3 verifies both servers from the controller.
+
+- name: Play 1 - Install and start Nginx on the web servers
+  hosts: web
+  become: true
+  tasks:
+    - name: Install Nginx
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Ensure Nginx is started and enabled at boot
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+
+- name: Play 2 - Deploy the static website
+  hosts: web
+  become: true
+  tasks:
+    - name: Copy index.html to the Nginx web root
+      ansible.builtin.copy:
+        src: files/index.html
+        dest: /var/www/html/index.html
+        owner: www-data
+        group: www-data
+        mode: "0644"
+      notify: Reload Nginx
+
+  handlers:
+    - name: Reload Nginx
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded
+
+- name: Play 3 - Verify both web servers from the controller
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Request the home page from each web server
+      ansible.builtin.uri:
+        url: "http://{{ hostvars[item].ansible_host }}/"
+        status_code: 200
+      loop: "{{ groups['web'] }}"
+      register: web_check
+
+    - name: Show the HTTP status returned by each web server
+      ansible.builtin.debug:
+        msg: "{{ web_check.results | map(attribute='item') | zip(web_check.results | map(attribute='status')) | map('join', ' returned HTTP ') | list }}"
+
+    - name: Assert every web server returned HTTP 200
+      ansible.builtin.assert:
+        that:
+          - web_check.results | map(attribute='status') | select('equalto', 200) | list | length == groups['web'] | length
+        success_msg: "All {{ groups['web'] | length }} web servers returned HTTP 200"
+        fail_msg: "At least one web server did not return HTTP 200"
