@@ -30,7 +30,7 @@ cat .dockerignore
 
 The file must exclude `node_modules`, `build`, and `.env`.
 
-Add your screenshot here.
+![Contents of .dockerignore](./screenshots/a2-01-dockerignore.png)
 
 ---
 
@@ -46,7 +46,7 @@ Create a baseline single-stage Docker image and run the application on port 3000
 
 Add a screenshot showing the completed `Dockerfile.single`.
 
-Add your screenshot here.
+![Contents of Dockerfile.single](./screenshots/a2-02-dockerfile-single.png)
 
 ---
 
@@ -60,7 +60,7 @@ http://localhost:3000
 
 Ensure that your full name is visible in the application.
 
-Add your screenshot here.
+![Single-stage container serving the app at localhost:3000](./screenshots/a2-03-single-stage-browser.png)
 
 ---
 
@@ -76,7 +76,7 @@ Create an optimized multi-stage Docker image with separate builder and Nginx run
 
 Add a screenshot showing the completed multi-stage `Dockerfile`.
 
-Add your screenshot here.
+![Contents of the multi-stage Dockerfile](./screenshots/a2-04-dockerfile-multistage.png)
 
 ---
 
@@ -90,7 +90,7 @@ http://localhost
 
 Ensure that your full name is visible in the application.
 
-Add your screenshot here.
+![Multi-stage container serving the app at localhost](./screenshots/a2-05-multistage-browser.png)
 
 ---
 
@@ -117,7 +117,7 @@ react-single:latest
 react-multistage:latest
 ```
 
-Add your screenshot here.
+![docker images showing react-single:latest and react-multistage:latest](./screenshots/a2-06-image-sizes.png)
 
 ---
 
@@ -126,15 +126,17 @@ Add your screenshot here.
 Record the image sizes and calculate the reduction using the same unit for both images.
 
 ```text
-Single-stage image size: Add size here
+Single-stage image size: 862 MB (react-single:latest, DISK USAGE column)
 
-Multi-stage image size: Add size here
+Multi-stage image size: 95 MB (react-multistage:latest, DISK USAGE column)
 
 Percentage reduction =
 ((Single-stage image size − Multi-stage image size)
 ÷ Single-stage image size) × 100
 
-Percentage reduction: Add result here
+((862 - 95) / 862) x 100 = 88.98%
+
+Percentage reduction: 88.98%
 ```
 
 ---
@@ -156,7 +158,12 @@ Write a short analysis of 5–8 lines covering:
 - How smaller images improve image pull and deployment speed
 - One Docker build-caching optimization you used
 
-Write your analysis here.
+The single-stage image (react-single:latest) is 862 MB on disk, and the multi-stage image (react-multistage:latest) is 95 MB, an 88.98% reduction.
+Both builds start from the same node:22-alpine base, so the whole difference comes from what ships in the final image.
+The single-stage image carries Node.js, npm and about 350 MB of node_modules into production just to serve a folder of static files, while the multi-stage runtime is nginx:alpine plus the compiled build/ output.
+Every package left out of the runtime is one less place for a CVE to hide, and if the container were ever compromised there is no Node runtime or npm inside it for an attacker to use.
+A smaller image also pulls faster onto a new host (26.6 MB compressed against 172 MB here), which speeds up deployments, rollbacks and scaling out.
+For build caching, I copy package.json and package-lock.json and run npm ci before copying the source, so a code-only change reuses the cached dependency layer instead of reinstalling every package.
 
 ---
 
@@ -191,13 +198,13 @@ Create a LinkedIn post describing what you built, what a multi-stage Docker buil
 
 Paste your LinkedIn post URL here:
 
-`Add your URL here`
+Not published, by choice.
 
 ---
 
 #### LinkedIn Post Screenshot
 
-Add a screenshot of the published LinkedIn post here.
+Not published, by choice.
 
 ---
 
@@ -214,18 +221,18 @@ Add a screenshot of the published LinkedIn post here.
 
 # Completion Checklist
 
-- [ ] Assignment completed locally
-- [ ] `.dockerignore` created and verified (Screenshot 1)
-- [ ] `Dockerfile.single` created (Screenshot 2)
-- [ ] Single-stage container verified in the browser (Screenshot 3)
-- [ ] Multi-stage `Dockerfile` created (Screenshot 4)
-- [ ] Multi-stage container verified in the browser (Screenshot 5)
-- [ ] Both Docker image sizes captured (Screenshot 6)
-- [ ] Percentage reduction calculated
-- [ ] Optimization analysis completed
-- [ ] LinkedIn post URL and screenshot included
-- [ ] Full name visible in all required screenshots
-- [ ] No sensitive information exposed
+- [x] Assignment completed locally
+- [x] `.dockerignore` created and verified (Screenshot 1)
+- [x] `Dockerfile.single` created (Screenshot 2)
+- [x] Single-stage container verified in the browser (Screenshot 3)
+- [x] Multi-stage `Dockerfile` created (Screenshot 4)
+- [x] Multi-stage container verified in the browser (Screenshot 5)
+- [x] Both Docker image sizes captured (Screenshot 6)
+- [x] Percentage reduction calculated
+- [x] Optimization analysis completed
+- [ ] LinkedIn post URL and screenshot included (not published, by choice)
+- [x] Full name visible in all required screenshots
+- [x] No sensitive information exposed
 
 ---
 
