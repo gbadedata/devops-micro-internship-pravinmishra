@@ -99,7 +99,11 @@ Add a terminal screenshot showing:
 
 ![Agent configuration, service install, start and status](./screenshots/a1-03-agent-config-service.png)
 
-*`./config.sh` connected to the `gbadedata` organization, added the agent `oluwagbade-ado-agent` to `oluwagbade-selfhosted-pool`, and saved its settings. `sudo ./svc.sh install`, `start` and `status` then registered it as a systemd service that runs as the `ubuntu` user and reports `active (running)`. The PAT was entered at a hidden prompt and does not appear anywhere.*
+*`./config.sh` connected to the `gbadedata` organization, added the agent `oluwagbade-ado-agent` to `oluwagbade-selfhosted-pool`, and saved its settings. `sudo ./svc.sh install` registered it as a systemd service that runs as the `ubuntu` user, and `sudo ./svc.sh start` started it (start prints the service state, `active (running)`). The PAT was entered at a hidden prompt and does not appear anywhere.*
+
+![sudo ./svc.sh status showing the agent service active (running)](./screenshots/a1-03b-agent-service-status.png)
+
+*A separate `sudo ./svc.sh status` run later: the service is still `active (running)` since 12:13 UTC, the same moment it was started above, so it has run continuously since registration.*
 
 > Ensure that the PAT is not visible.
 
