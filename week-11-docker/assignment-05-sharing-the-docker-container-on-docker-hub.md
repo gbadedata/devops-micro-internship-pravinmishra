@@ -26,7 +26,9 @@ Add a screenshot of Docker Hub showing your newly created public repository:
 my-react-app
 ```
 
-Add your screenshot here.
+![Public my-react-app repository created on Docker Hub](./screenshots/a5-01-dockerhub-repo-created.png)
+
+*Oluwagbade Odimayo*
 
 ---
 
@@ -40,7 +42,7 @@ Login Succeeded
 
 Ensure that your full name is visible and that no password, Personal Access Token, or device code is exposed.
 
-Add your screenshot here.
+![docker login showing Login Succeeded](./screenshots/a5-02-docker-login.png)
 
 ---
 
@@ -54,7 +56,7 @@ docker image ls <YOUR_DOCKERHUB_USERNAME>/my-react-app
 
 The output must show the `latest` tag.
 
-Add your screenshot here.
+![docker image ls gbadedata/my-react-app showing the latest tag](./screenshots/a5-03-tagged-image.png)
 
 ---
 
@@ -68,7 +70,7 @@ docker push <YOUR_DOCKERHUB_USERNAME>/my-react-app:latest
 
 The output must include a pushed status or image digest.
 
-Add your screenshot here.
+![docker push gbadedata/my-react-app:latest with image digest](./screenshots/a5-04-docker-push.png)
 
 ---
 
@@ -76,7 +78,9 @@ Add your screenshot here.
 
 Add a screenshot of your Docker Hub repository showing the uploaded `latest` image tag.
 
-Add your screenshot here.
+![latest tag published in the Docker Hub repository](./screenshots/a5-05-dockerhub-latest-tag.png)
+
+*Oluwagbade Odimayo*
 
 ---
 
@@ -88,7 +92,7 @@ Add a screenshot of the terminal showing:
 - Successful `docker pull` output
 - `docker image ls` showing the pulled image
 
-Add your screenshot here.
+![Local tags removed, image pulled again from Docker Hub](./screenshots/a5-06-removed-and-pulled.png)
 
 ---
 
@@ -106,7 +110,7 @@ The output must show the running `react-container` with:
 0.0.0.0:80->80/tcp
 ```
 
-Add your screenshot here.
+![docker ps showing react-container on 0.0.0.0:80->80/tcp](./screenshots/a5-07-docker-ps-react-container.png)
 
 ---
 
@@ -120,13 +124,15 @@ http://<YOUR-VM-PUBLIC-IP>
 
 Ensure that the VM public IP is visible in the address bar. Add your full name as a clear caption directly below the screenshot.
 
-Add your screenshot here.
+![React application served from the pulled image at the VM public IP](./screenshots/a5-08-react-app-browser.png)
+
+*Oluwagbade Odimayo*
 
 ---
 
 # Docker Hub Repository URL
 
-**Repository URL:** `Add your Docker Hub repository URL here`
+**Repository URL:** https://hub.docker.com/r/gbadedata/my-react-app
 
 ---
 
@@ -138,7 +144,11 @@ Write a short explanation covering:
 - Why a container registry is useful in DevOps workflows
 - Why production deployments should use versioned image tags instead of relying only on `latest`
 
-Write your explanation here.
+**Why image tagging is required before pushing.** Docker works out where to push from the image name itself. A local name like `react-multistage:latest` has no registry or account in it, so Docker would treat it as `docker.io/library/react-multistage`, the namespace reserved for official images, which I cannot push to. Tagging it as `gbadedata/my-react-app:latest` adds my Docker Hub account and repository to the name. The tag is only a second name for the same image ID, so nothing is copied or rebuilt.
+
+**Why a container registry is useful in DevOps workflows.** A registry is the single place where a built image lives, so an image is built once and then pulled by any machine that needs to run it. In this assignment I deleted every local copy and the VM still pulled and ran the exact image I had pushed, which is the same pattern a CI pipeline uses: build and push once, then servers pull that image to deploy. Images are stored as layers, so a pull only downloads the layers a host does not already have.
+
+**Why production should use versioned tags instead of only `latest`.** `latest` is just the default tag name, not a guarantee of the newest build, and it moves every time someone pushes. Two servers pulling `latest` at different times can end up running different code, and once `latest` has been overwritten there is no clean way to roll back to what was running before. Versioned tags such as `v1.0.0` or a Git commit SHA point at one specific build, so every environment runs a known version and a rollback is just redeploying the previous tag.
 
 ---
 
@@ -162,13 +172,13 @@ Include:
 
 Paste your LinkedIn post URL here:
 
-`Add your URL here`
+Not published, by choice.
 
 ---
 
 #### LinkedIn Post Screenshot
 
-Add a screenshot of the published LinkedIn post here.
+Not published, by choice.
 
 ---
 
@@ -187,22 +197,22 @@ Add a screenshot of the published LinkedIn post here.
 
 # Completion Checklist
 
-- [ ] Public `my-react-app` repository created
-- [ ] Docker login completed successfully
-- [ ] `react-multistage:latest` tagged correctly
-- [ ] Image pushed to Docker Hub
-- [ ] `latest` tag verified in Docker Hub
-- [ ] Targeted local image tags removed
-- [ ] Image pulled again from Docker Hub
-- [ ] Pulled image runs successfully
-- [ ] React application is accessible through the VM public IP
-- [ ] Docker Hub repository URL included
-- [ ] Registry and image-tagging notes completed
-- [ ] LinkedIn post URL and screenshot included
-- [ ] All required screenshots included
-- [ ] Full name visible in terminal screenshots
-- [ ] Browser screenshot has a full-name caption
-- [ ] No passwords, tokens, or credentials exposed
+- [x] Public `my-react-app` repository created
+- [x] Docker login completed successfully
+- [x] `react-multistage:latest` tagged correctly
+- [x] Image pushed to Docker Hub
+- [x] `latest` tag verified in Docker Hub
+- [x] Targeted local image tags removed
+- [x] Image pulled again from Docker Hub
+- [x] Pulled image runs successfully
+- [x] React application is accessible through the VM public IP
+- [x] Docker Hub repository URL included
+- [x] Registry and image-tagging notes completed
+- [ ] LinkedIn post URL and screenshot included (not published, by choice)
+- [x] All required screenshots included
+- [x] Full name visible in terminal screenshots
+- [x] Browser screenshot has a full-name caption
+- [x] No passwords, tokens, or credentials exposed
 ---
 
 ## 📌 About DMI & CloudAdvisory
