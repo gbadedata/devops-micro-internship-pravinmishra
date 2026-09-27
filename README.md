@@ -3,10 +3,10 @@
 ![Cohort](https://img.shields.io/badge/Cohort-3-blue?style=for-the-badge)
 ![Program](https://img.shields.io/badge/DevOps_Micro_Internship-Pravin_Mishra-orange?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-In_Progress-yellow?style=for-the-badge)
-![Weeks](https://img.shields.io/badge/Weeks_Completed-9%2F14-green?style=for-the-badge)
+![Weeks](https://img.shields.io/badge/Weeks_Completed-10%2F14-green?style=for-the-badge)
 
 > 👋 **New here?** Read the [submission instructions](./onboarding) first — how to fork, fill in, and submit your assignments.
-> Find all the required links & assignment guidelines from here [Required links](./dmi_cohort3_resources.md)
+> Find all the required links & assignment guidelines from here [Required links](./dmi_resources.md)
 
 ---
 
@@ -141,7 +141,7 @@ This is not a course. It is an internship-style program — real deployments, re
 | 08 | Terraform | ✅ Completed | ✅ Solved | — | [Blog](https://gbadedata.hashnode.dev/terraform-plan-wrong-aws-account), [Blog 2](https://gbadedata.hashnode.dev/terraform-ai-capstone-valid-is-not-working) |
 | 09 | Ansible | ✅ Completed | ✅ Solved | — | [Blog](https://gbadedata.hashnode.dev/ansible-worked-still-not-done) |
 | 10 | Azure DevOps (CI/CD) | ⬜ Not Started | ⏳ Pending | — | — |
-| 11 | Docker | ⬜ Not Started | ⏳ Pending | — | — |
+| 11 | Docker | ✅ Completed | ✅ Solved | — | [Blog](https://gbadedata.hashnode.dev/containers-expose-your-assumptions) |
 | 12 | Kubernetes | ⬜ Not Started | ⏳ Pending | — | — |
 | 13 | Final Project | ⬜ Not Started | ⏳ Pending | — | — |
 
