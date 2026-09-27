@@ -12,7 +12,7 @@ In this assignment, you will build a read-only Bash script that audits a running
 
 # Target Container
 
-**Target Container Name:** `Add the exact container name here`
+**Target Container Name:** `epicbook-frontend-1`
 
 ---
 
@@ -33,7 +33,7 @@ docker-audit.sh
 SKILL.md
 ```
 
-Add your screenshot here.
+![Audit workspace with docker-audit.sh and SKILL.md](./screenshots/a8-01-audit-workspace.png)
 
 ---
 
@@ -49,7 +49,9 @@ Add the supplied `docker-audit` skill to Claude Code and confirm that it is avai
 
 Add a screenshot of Claude Code showing `docker-audit` in the available skill list.
 
-Add your screenshot here.
+![docker-audit skill listed in Claude Code](./screenshots/a8-02-skill-available.png)
+
+*Oluwagbade Odimayo*
 
 ---
 
@@ -70,7 +72,7 @@ Add a terminal screenshot showing:
 - Your full name
 - The usage message displayed when the script runs without a container name
 
-Add your screenshot here.
+![LF line-ending check, bash -n syntax check and usage message](./screenshots/a8-03-script-validation.png)
 
 ---
 
@@ -90,7 +92,7 @@ Add a terminal screenshot showing:
 - `docker ps`
 - The audit command using the selected target container name
 
-Add your screenshot here.
+![docker ps and the audit command for epicbook-frontend-1](./screenshots/a8-04-target-container.png)
 
 ---
 
@@ -98,7 +100,7 @@ Add your screenshot here.
 
 Add a terminal screenshot showing the initial Docker audit results.
 
-Add your screenshot here.
+![Initial audit: five PASS and one WARN for the container user](./screenshots/a8-05-initial-audit.png)
 
 ---
 
@@ -119,7 +121,9 @@ Add a Claude Code screenshot showing:
 - Recommended manual fix
 - Verification method
 
-Add your screenshot here.
+![Claude Code explaining the finding, risk, manual fix and verification](./screenshots/a8-06-claude-explanation.png)
+
+*Oluwagbade Odimayo*
 
 ---
 
@@ -135,7 +139,7 @@ Manually fix one WARN or FAIL finding from the initial audit.
 
 Add a screenshot of the updated Dockerfile or `docker-compose.yml` showing the selected hardening fix.
 
-Add your screenshot here.
+![Dockerfile, Compose and proxy changes for the non-root frontend](./screenshots/a8-07-hardening-change.png)
 
 ---
 
@@ -143,7 +147,7 @@ Add your screenshot here.
 
 Add a terminal screenshot showing your full name and the rebuilt or recreated service/container running successfully.
 
-Add your screenshot here.
+![Rebuilt frontend 1.1.0 healthy, running as uid 101, assets served through the proxy](./screenshots/a8-08-updated-service.png)
 
 ---
 
@@ -163,7 +167,7 @@ Add a terminal screenshot showing:
 - The updated running container
 - The final audit report
 
-Add your screenshot here.
+![Final audit: all six checks PASS](./screenshots/a8-09-final-audit.png)
 
 ---
 
@@ -176,7 +180,10 @@ Write a short comparison covering:
 - Final audit result
 - Security benefit of the improvement
 
-Write your comparison here.
+- **Initial audit finding:** the first audit of `epicbook-frontend-1` (image `epicbook-frontend:1.0.0`, built on `nginx:stable-alpine`) returned five PASS results and one **WARN: Container user**, because no non-root user was configured and the Nginx master process ran as root.
+- **Change applied:** I switched the frontend's base image to `nginxinc/nginx-unprivileged:1.30-alpine`, which NGINX maintains for running as a non-root user, and added `USER 101` and `EXPOSE 8080` to `frontend/Dockerfile`. Because the unprivileged image listens on 8080, I also updated the frontend health check in `docker-compose.yml` to port 8080, bumped the image tag to `epicbook-frontend:1.1.0`, and pointed the reverse proxy at `frontend:8080`. I made the edits myself, then rebuilt and recreated only the frontend and restarted the proxy; the backend and database kept running.
+- **Final audit result:** all six checks PASS, and the user check now reports `The container is configured to run as user: 101`. `docker compose exec frontend id` shows `uid=101(nginx)`, the frontend is healthy, and static assets still return 200 through the reverse proxy.
+- **Security benefit:** if an attacker found a flaw in Nginx or in how it serves files, they would now land in the container as an unprivileged user instead of root. They could not install packages, change the served files or system configuration, or use root privileges as a starting point to attack the host, so the damage from a compromise is much smaller. It also removes a WARN that would otherwise recur in every future audit of this service.
 
 ---
 
@@ -188,13 +195,13 @@ Create a LinkedIn post about the container security checks you performed, one ha
 
 ### Evidence
 
-**LinkedIn Post URL:** `Add your LinkedIn post URL here`
+**LinkedIn Post URL:** Not published, by choice.
 
 #### LinkedIn Post Screenshot
 
-Add a screenshot of the published LinkedIn post, including the final audit result.
+Not published, by choice.
 
-Add your screenshot here.
+Not published, by choice.
 
 ---
 
@@ -210,19 +217,19 @@ Add your screenshot here.
 
 # Completion Checklist
 
-- [ ] Audit workspace created and supplied files verified
-- [ ] `docker-audit` skill added to Claude Code
-- [ ] Audit script validated successfully
-- [ ] Running target container identified
-- [ ] Initial Docker audit completed
-- [ ] Claude Code explanation of findings captured
-- [ ] One hardening fix applied manually
-- [ ] Affected service or container rebuilt and recreated
-- [ ] Final Docker audit completed
-- [ ] Before-and-after comparison completed
-- [ ] Screenshots 1–9 included
-- [ ] LinkedIn post URL and screenshot included
-- [ ] No sensitive information exposed
+- [x] Audit workspace created and supplied files verified
+- [x] `docker-audit` skill added to Claude Code
+- [x] Audit script validated successfully
+- [x] Running target container identified
+- [x] Initial Docker audit completed
+- [x] Claude Code explanation of findings captured
+- [x] One hardening fix applied manually
+- [x] Affected service or container rebuilt and recreated
+- [x] Final Docker audit completed
+- [x] Before-and-after comparison completed
+- [x] Screenshots 1–9 included
+- [ ] LinkedIn post URL and screenshot included (not published, by choice)
+- [x] No sensitive information exposed
 
 ---
 
