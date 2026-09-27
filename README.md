@@ -140,7 +140,7 @@ This is not a course. It is an internship-style program — real deployments, re
 | 07 | Azure Cloud | ✅ Completed | ✅ Solved | — | [Blog](https://gbadedata.hashnode.dev/azure-deleted-my-subnet-twice-eight-defaults-that-quietly-break-deployments) |
 | 08 | Terraform | ✅ Completed | ✅ Solved | — | [Blog](https://gbadedata.hashnode.dev/terraform-plan-wrong-aws-account), [Blog 2](https://gbadedata.hashnode.dev/terraform-ai-capstone-valid-is-not-working) |
 | 09 | Ansible | ✅ Completed | ✅ Solved | — | [Blog](https://gbadedata.hashnode.dev/ansible-worked-still-not-done) |
-| 10 | Azure DevOps (CI/CD) | ⬜ Not Started | ⏳ Pending | — | — |
+| 10 | Azure DevOps (CI/CD) | 🔄 In Progress | ⏳ Pending | — | [Blog](https://gbadedata.hashnode.dev/green-pipeline-is-a-claim-not-proof) |
 | 11 | Docker | ✅ Completed | ✅ Solved | — | [Blog](https://gbadedata.hashnode.dev/containers-expose-your-assumptions) |
 | 12 | Kubernetes | ⬜ Not Started | ⏳ Pending | — | — |
 | 13 | Final Project | ⬜ Not Started | ⏳ Pending | — | — |
