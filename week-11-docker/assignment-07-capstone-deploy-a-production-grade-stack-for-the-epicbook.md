@@ -522,7 +522,9 @@ Optionally automate image build, image push, and deployment through GitHub Actio
 
 Add a screenshot showing a successful pipeline run with build, image push, deployment, and verification stages.
 
-Not attempted (optional task).
+![GitHub Actions run #1: build, push, deploy and verify jobs all successful for commit b4c000a](./screenshots/a7-task8-cicd-pipeline.png)
+
+*Oluwagbade Odimayo*
 
 ---
 
@@ -536,7 +538,12 @@ Write a short note covering:
 - Deployment trigger
 - Manual approval or secret-handling approach
 
-Not attempted (optional task).
+- **CI/CD platform:** GitHub Actions (`.github/workflows/deploy.yml` in my fork), running on a self-hosted runner installed as a service on the EC2 VM. The runner connects outbound to GitHub and pulls jobs, so no inbound port was opened: the security group still allows only 22 from my IP and 80 from anywhere.
+- **Pipeline stages:** four jobs in order. Build creates both images, push sends them to Docker Hub, deploy checks out the same commit in the stack directory and runs `docker compose up -d --wait` for the backend and frontend only, and verify confirms the running containers carry the new tag and that `/health`, a page, the API and a static asset all return 200 through the reverse proxy. Run #1 succeeded in 1m 4s, and `docker compose ps` afterwards showed `gbadedata/epicbook-backend:b4c000a` and `gbadedata/epicbook-frontend:b4c000a` healthy, with the database untouched.
+- **Image-tagging method:** the short Git commit SHA (for example `b4c000a`), never `latest`, so every running container traces back to an exact commit and a rollback is a redeploy of the previous tag. The deploy job records the tags in the server's `.env`, so manual `docker compose` commands keep the deployed version instead of reverting to old local images.
+- **Registry used:** Docker Hub, repositories `gbadedata/epicbook-backend` and `gbadedata/epicbook-frontend`.
+- **Deployment trigger:** every push to `main`, plus manual runs (`workflow_dispatch`). The workflow never runs for pull requests, and the repository requires approval before any outside contributor's workflow can run, because the runner has Docker access on the production VM.
+- **Secret handling and approval:** the Docker Hub access token is stored as the GitHub Actions secret `DOCKERHUB_TOKEN`, passed to `docker login --password-stdin` and removed with `docker logout` even if a step fails, so it never appears in logs. Database credentials never leave the server-only `.env`. The workflow has read-only repository permissions and a concurrency lock so two deployments cannot overlap. There is no manual approval gate yet; for a real production environment I would add a protected GitHub environment with a required reviewer before the deploy job.
 
 ---
 
