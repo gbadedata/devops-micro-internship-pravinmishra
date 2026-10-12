@@ -1,0 +1,70 @@
+========================================
+CI/CD Pipeline Failure Triage Report
+EpicBook dual pipelines (Azure DevOps)
+========================================
+Full Name: Oluwagbade Odimayo
+Timestamp: 2026-10-12T09:31:38Z
+Organization: https://dev.azure.com/gbadedata
+Project: DMI-Week10
+Mode: read-only (HTTP GET requests only)
+
+Authentication: Personal Access Token from the AZURE_DEVOPS_EXT_PAT environment variable
+
+---------------- Infrastructure Pipeline ----------------
+Pipeline name: gbadedata.epicbook-infra
+Pipeline ID: 5
+Run: 20260927.1 (run ID 26)
+Branch: main (commit 2e8f96bb)
+Trigger: manual
+Status: completed
+Result: succeeded
+Completion time: 2026-09-27T12:31:25.5712Z
+Failed step(s): none
+Raw log file: reports/infra-last-run.log
+
+[PASS] Infrastructure Pipeline: run 20260927.1 (run ID 26) on main succeeded
+[PASS] Infrastructure Pipeline: no dependency installation failure detected
+[PASS] Infrastructure Pipeline: no test failure detected
+[PASS] Infrastructure Pipeline: no build or compilation failure detected
+[PASS] Infrastructure Pipeline: no authentication, authorization or SSH failure detected
+[PASS] Infrastructure Pipeline: no agent availability, timeout or queue failure detected
+[PASS] Infrastructure Pipeline: no Terraform infrastructure or provisioning failure detected
+[PASS] Infrastructure Pipeline: no Ansible, Nginx or application deployment failure detected
+[PASS] Infrastructure Pipeline: no unclassified failure
+
+Pipeline verdict: HEALTHY
+
+---------------- Application Pipeline ----------------
+Pipeline name: gbadedata.epicbook-app
+Pipeline ID: 6
+Run: 20261012.3 (run ID 30)
+Branch: drill/pipeline-failure (commit 16d58cc7)
+Trigger: manual
+Status: completed
+Result: succeeded
+Completion time: 2026-10-12T09:28:21.3598006Z
+Failed step(s): none
+Raw log file: reports/app-last-run.log
+
+[PASS] Application Pipeline: run 20261012.3 (run ID 30) on drill/pipeline-failure succeeded
+[PASS] Application Pipeline: no dependency installation failure detected
+[PASS] Application Pipeline: no test failure detected
+[PASS] Application Pipeline: no build or compilation failure detected
+[PASS] Application Pipeline: no authentication, authorization or SSH failure detected
+[PASS] Application Pipeline: no agent availability, timeout or queue failure detected
+[PASS] Application Pipeline: no Terraform infrastructure or provisioning failure detected
+[PASS] Application Pipeline: no Ansible, Nginx or application deployment failure detected
+[PASS] Application Pipeline: no unclassified failure
+
+Pipeline verdict: HEALTHY
+
+
+Summary:
+PASS: 18
+WARN: 0
+FAIL: 0
+ERROR: 0
+Overall Status: HEALTHY
+Script Exit Code: 0
+Report File: reports/pipeline-health-report.txt
+Raw Log Files: reports/infra-last-run.log, reports/app-last-run.log

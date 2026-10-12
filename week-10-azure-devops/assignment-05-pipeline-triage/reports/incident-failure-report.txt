@@ -1,0 +1,78 @@
+========================================
+CI/CD Pipeline Failure Triage Report
+EpicBook dual pipelines (Azure DevOps)
+========================================
+Full Name: Oluwagbade Odimayo
+Timestamp: 2026-10-12T09:09:02Z
+Organization: https://dev.azure.com/gbadedata
+Project: DMI-Week10
+Mode: read-only (HTTP GET requests only)
+
+Authentication: Personal Access Token from the AZURE_DEVOPS_EXT_PAT environment variable
+
+---------------- Infrastructure Pipeline ----------------
+Pipeline name: gbadedata.epicbook-infra
+Pipeline ID: 5
+Run: 20260927.1 (run ID 26)
+Branch: main (commit 2e8f96bb)
+Trigger: manual
+Status: completed
+Result: succeeded
+Completion time: 2026-09-27T12:31:25.5712Z
+Failed step(s): none
+Raw log file: reports/infra-last-run.log
+
+[PASS] Infrastructure Pipeline: run 20260927.1 (run ID 26) on main succeeded
+[PASS] Infrastructure Pipeline: no dependency installation failure detected
+[PASS] Infrastructure Pipeline: no test failure detected
+[PASS] Infrastructure Pipeline: no build or compilation failure detected
+[PASS] Infrastructure Pipeline: no authentication, authorization or SSH failure detected
+[PASS] Infrastructure Pipeline: no agent availability, timeout or queue failure detected
+[PASS] Infrastructure Pipeline: no Terraform infrastructure or provisioning failure detected
+[PASS] Infrastructure Pipeline: no Ansible, Nginx or application deployment failure detected
+[PASS] Infrastructure Pipeline: no unclassified failure
+
+Pipeline verdict: HEALTHY
+
+---------------- Application Pipeline ----------------
+Pipeline name: gbadedata.epicbook-app
+Pipeline ID: 6
+Run: 20261012.2 (run ID 29)
+Branch: drill/pipeline-failure (commit 56b77864)
+Trigger: manual
+Status: completed
+Result: failed
+Completion time: 2026-10-12T09:04:02.3798414Z
+Failed step(s): Install dependencies (npm ci)
+Raw log file: reports/app-last-run.log
+
+[FAIL] Application Pipeline: run 20261012.2 (run ID 29) on drill/pipeline-failure failed
+[FAIL] Application Pipeline: dependency installation failure detected
+    Evidence (sanitized):
+      Install dependencies (npm ci) | npm error code E404
+      Install dependencies (npm ci) | npm error 404 Not Found - GET https://registry.npmjs.org/epicbook-drill-missing-dependency - Not found
+      Install dependencies (npm ci) | npm error 404
+      Install dependencies (npm ci) | npm error 404  'epicbook-drill-missing-dependency@^1.0.0' is not in this registry.
+      Install dependencies (npm ci) | npm error 404
+[PASS] Application Pipeline: no test failure detected
+[PASS] Application Pipeline: no build or compilation failure detected
+[PASS] Application Pipeline: no authentication, authorization or SSH failure detected
+[PASS] Application Pipeline: no agent availability, timeout or queue failure detected
+[PASS] Application Pipeline: no Terraform infrastructure or provisioning failure detected
+[PASS] Application Pipeline: no Ansible, Nginx or application deployment failure detected
+[PASS] Application Pipeline: no unclassified failure
+
+Pipeline verdict: FAILED
+Most likely failure category: dependency installation failure
+Recommended human action: Fix the package name or version shown in the evidence (package.json and package-lock.json), commit it, then queue the pipeline again yourself.
+
+
+Summary:
+PASS: 16
+WARN: 0
+FAIL: 2
+ERROR: 0
+Overall Status: FAIL
+Script Exit Code: 2
+Report File: reports/pipeline-health-report.txt
+Raw Log Files: reports/infra-last-run.log, reports/app-last-run.log
