@@ -1,0 +1,5 @@
+# Raw logs and the live report are regenerated on every run and may contain
+# infrastructure details; only the saved incident and recovery reports are committed.
+reports/infra-last-run.log
+reports/app-last-run.log
+reports/pipeline-health-report.txt
