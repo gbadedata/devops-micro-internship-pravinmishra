@@ -32,7 +32,7 @@ Create and enter the dedicated Deployment lab directory.
 
 #### Screenshot 01 — Output of `pwd` showing the directory ending in `/k8s-labs/deployments`
 
-Add your screenshot here.
+![pwd showing the ~/k8s-labs/deployments working directory](./screenshots/a3-01-pwd-deployments-dir.png)
 
 ---
 
@@ -46,13 +46,13 @@ Create a two-replica NGINX Deployment and verify the automatically managed Repli
 
 #### Screenshot 02 — Completed basic `nginx-deployment.yaml` showing two replicas and the initial NGINX image
 
-Add your screenshot here.
+![Basic nginx-deployment.yaml with two replicas and nginx:1.21.1](./screenshots/a3-02-deployment-yaml-basic.png)
 
 ---
 
 #### Screenshot 03 — Successful apply output and verification output showing the Deployment, its automatically created ReplicaSet, and two Pods with `1/1` under `READY` and `Running` under `STATUS`
 
-Add your screenshot here.
+![Deployment applied, with its ReplicaSet and two Pods at 1/1 Running](./screenshots/a3-03-deployment-rs-pods.png)
 
 ---
 
@@ -66,13 +66,15 @@ Configure RollingUpdate to maintain the desired available replica count during a
 
 #### Screenshot 04 — Updated YAML showing `RollingUpdate`, `maxSurge: 1`, and `maxUnavailable: 0`
 
-Add your screenshot here.
+![nginx-deployment.yaml with RollingUpdate, maxSurge: 1 and maxUnavailable: 0](./screenshots/a3-04-deployment-yaml-rolling.png)
+
+Manifest file (final): [`k8s-labs/deployments/nginx-deployment.yaml`](./k8s-labs/deployments/nginx-deployment.yaml)
 
 ---
 
 #### Screenshot 05 — Successful apply output and Deployment details showing the configured rolling-update strategy
 
-Add your screenshot here.
+![Deployment details showing the RollingUpdate strategy](./screenshots/a3-05-strategy-applied.png)
 
 ---
 
@@ -86,25 +88,25 @@ Update NGINX to 1.23.1, observe the rollout, and return to the previous stable r
 
 #### Screenshot 06 — Image-update command and rollout status showing successful completion
 
-Add your screenshot here.
+![kubectl set image to nginx:1.23.1 and successful rollout status](./screenshots/a3-06-image-update-rollout.png)
 
 ---
 
 #### Screenshot 07 — ReplicaSet output showing the previous and updated ReplicaSets, and Deployment details showing `nginx:1.23.1`
 
-Add your screenshot here.
+![Old and new ReplicaSets, and the Deployment on nginx:1.23.1](./screenshots/a3-07-old-new-replicasets.png)
 
 ---
 
 #### Screenshot 08 — Rollback command and rollout status showing successful completion
 
-Add your screenshot here.
+![kubectl rollout undo and successful rollout status](./screenshots/a3-08-rollback.png)
 
 ---
 
 #### Screenshot 09 — Rollout history and Deployment details showing the restored `nginx:1.21.1` image
 
-Add your screenshot here.
+![Rollout history and the restored nginx:1.21.1 image](./screenshots/a3-09-history-restored-image.png)
 
 ---
 
@@ -118,13 +120,13 @@ Scale the workload to five replicas and return it to two.
 
 #### Screenshot 10 — Scale-up command and output showing five Pods with `1/1` under `READY` and `Running` under `STATUS`
 
-Add your screenshot here.
+![Deployment scaled to five Pods at 1/1 Running](./screenshots/a3-10-scaled-to-five.png)
 
 ---
 
 #### Screenshot 11 — Scale-down command and output showing the final two Pods with `1/1` under `READY` and `Running` under `STATUS`
 
-Add your screenshot here.
+![Deployment scaled back to two Pods at 1/1 Running](./screenshots/a3-11-scaled-to-two.png)
 
 ---
 
@@ -162,7 +164,7 @@ I also scaled my Deployment from two Pods to five and back to two!
 
 #### Screenshot 12 — Published WhatsApp Status showing your Kubernetes Deployment message and generated DMI leaderboard progress link
 
-Add your screenshot here.
+Not published, by choice.
 
 A draft or editing screen is not sufficient.
 
@@ -172,7 +174,15 @@ A draft or editing screen is not sufficient.
 
 Write a short note explaining how Deployments manage ReplicaSets, perform rolling updates and rollbacks, and scale Pods.
 
-Add your answer here.
+A Deployment does not run Pods directly. It owns ReplicaSets, and each ReplicaSet owns Pods. When I applied `nginx-deployment.yaml`, the Deployment created one ReplicaSet (`nginx-deployment-688b5789db`), and that ReplicaSet created the two Pods. The suffix is a hash of the Pod template, so every change to the template means a different ReplicaSet.
+
+**Rolling update.** `kubectl set image` changed the template to `nginx:1.23.1`, so the Deployment created a second ReplicaSet (`nginx-deployment-6497764cfb`) and moved the Pods across gradually. With `maxSurge: 1` and `maxUnavailable: 0`, it could add at most one extra Pod at a time and could never drop below two available Pods, so each new Pod had to be ready before an old one was removed. The old ReplicaSet was kept at 0 replicas rather than deleted.
+
+**Rollback.** `kubectl rollout undo` switched the template back to `nginx:1.21.1`. That template already had a ReplicaSet, so the Deployment scaled `688b5789db` back up and `6497764cfb` down to 0, following the same rolling-update rules. The history then listed only revisions 2 and 3: rolling back to revision 1 made it the newest revision, so it was renumbered to 3. CHANGE-CAUSE shows `<none>` because I did not annotate the changes.
+
+**Scaling.** `kubectl scale --replicas=5` and then `--replicas=2` only changed the replica count on the current ReplicaSet. The template did not change, so there was no new ReplicaSet, no new revision, and the image stayed at 1.21.1.
+
+I made the image update, the rollback and the scaling with imperative commands, so the submitted `nginx-deployment.yaml` still describes the intended steady state: two replicas, `nginx:1.21.1`, and the RollingUpdate strategy.
 
 ---
 
@@ -189,23 +199,23 @@ Add your answer here.
 
 # Completion Checklist
 
-- [ ] Completed Task 0
-- [ ] Created the deployments directory (Screenshot 01)
-- [ ] Created the basic two-replica NGINX Deployment manifest (Screenshot 02)
-- [ ] Applied the Deployment and verified its ReplicaSet and two running Pods (Screenshot 03)
-- [ ] Added RollingUpdate with `maxSurge: 1` and `maxUnavailable: 0` (Screenshot 04)
-- [ ] Applied and verified the rolling-update strategy (Screenshot 05)
-- [ ] Updated NGINX to 1.23.1 and confirmed rollout completion (Screenshot 06)
-- [ ] Inspected the ReplicaSets and verified the updated image (Screenshot 07)
-- [ ] Rolled back the update and confirmed rollout completion (Screenshot 08)
-- [ ] Reviewed rollout history and verified the restored image (Screenshot 09)
-- [ ] Scaled to five running Pods (Screenshot 10)
-- [ ] Scaled back to two running Pods (Screenshot 11)
-- [ ] Published the WhatsApp Status with the generated leaderboard progress link (Screenshot 12)
-- [ ] Submitted the final `nginx-deployment.yaml`
-- [ ] Included screenshots 01–12
-- [ ] Completed the Lab Summary
-- [ ] No sensitive data exposed
+- [x] Completed Task 0
+- [x] Created the deployments directory (Screenshot 01)
+- [x] Created the basic two-replica NGINX Deployment manifest (Screenshot 02)
+- [x] Applied the Deployment and verified its ReplicaSet and two running Pods (Screenshot 03)
+- [x] Added RollingUpdate with `maxSurge: 1` and `maxUnavailable: 0` (Screenshot 04)
+- [x] Applied and verified the rolling-update strategy (Screenshot 05)
+- [x] Updated NGINX to 1.23.1 and confirmed rollout completion (Screenshot 06)
+- [x] Inspected the ReplicaSets and verified the updated image (Screenshot 07)
+- [x] Rolled back the update and confirmed rollout completion (Screenshot 08)
+- [x] Reviewed rollout history and verified the restored image (Screenshot 09)
+- [x] Scaled to five running Pods (Screenshot 10)
+- [x] Scaled back to two running Pods (Screenshot 11)
+- [ ] Published the WhatsApp Status with the generated leaderboard progress link (Screenshot 12) (not published, by choice)
+- [x] Submitted the final `nginx-deployment.yaml`
+- [ ] Included screenshots 01–12 (01–11 included; 12 not published, by choice)
+- [x] Completed the Lab Summary
+- [x] No sensitive data exposed
 
 ---
 
