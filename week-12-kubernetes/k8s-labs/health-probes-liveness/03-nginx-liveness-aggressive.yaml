@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.30.5
+          # Simulates a slow-starting application: NGINX only starts listening after 15 seconds
+          command: ["sh", "-c", "sleep 15 && exec nginx -g 'daemon off;'"]
+          ports:
+            - containerPort: 80
+          # Over-aggressive: first check at 2s, every 2s, one failure is enough to restart
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 2
+            periodSeconds: 2
+            failureThreshold: 1
