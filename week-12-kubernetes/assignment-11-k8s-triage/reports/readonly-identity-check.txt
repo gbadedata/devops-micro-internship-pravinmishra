@@ -1,0 +1,26 @@
+Read-only identity check for Claude Code's kubeconfig, context k8s-triage-reader@aks-oluwagbade-week12
+Run by Oluwagbade Odimayo at 2026-10-14T22:07:09Z, with the same token Claude Code used
+--- needed by the triage script (expect yes):
+  yes  get namespace/book-review
+  yes  list pods -n book-review
+  yes  get pods --subresource=log -n book-review
+  yes  list events -n book-review
+  yes  get services -n book-review
+  yes  list endpointslices.discovery.k8s.io -n book-review
+  yes  list endpoints -n book-review
+--- changes and Secrets (expect no):
+  no   patch deployments -n book-review
+  no   update deployments/scale -n book-review
+  no   delete pods -n book-review
+  no   create pods/exec -n book-review
+  no   get secrets -n book-review
+  no   list pods -n kube-system
+--- namespace objects outside book-review, as real requests (expect Forbidden):
+    (kubectl auth can-i answers for the kubeconfig's default namespace, book-review, where the built-in view
+    role includes namespaces, so it reports yes here; the API server decides real requests, shown below)
+  $ kubectl get namespace kube-system
+    Error from server (Forbidden): namespaces "kube-system" is forbidden: User "system:serviceaccount:book-review:k8s-triage-reader" cannot get resource "namespaces" in API group "" in the namespace "kube-system"
+  $ kubectl get namespaces
+    Error from server (Forbidden): namespaces is forbidden: User "system:serviceaccount:book-review:k8s-triage-reader" cannot list resource "namespaces" in API group "" at the cluster scope
+--- write attempt with this identity (server-side dry run):
+  Error from server (Forbidden): deployments.apps "backend" is forbidden: User "system:serviceaccount:book-review:k8s-triage-reader" cannot patch resource "deployments/scale" in API group "apps" in the namespace "book-review"

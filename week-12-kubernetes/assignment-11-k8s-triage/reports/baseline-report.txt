@@ -1,0 +1,39 @@
+========================================
+Kubernetes Incident Triage Report
+========================================
+Full Name: Oluwagbade Odimayo
+Timestamp: 2026-10-14T17:20:20Z
+Namespace: book-review
+App Label: app=book-review,tier=backend
+Service: backend
+
+[PASS] Cluster access, namespace, and matching pod selection verified (2 pod(s))
+
+Pod status (kubectl get pods -o wide):
+  NAME                       READY   STATUS    RESTARTS   AGE   IP              NODE                                NOMINATED NODE   READINESS GATES
+  backend-7f95954f96-c62pd   1/1     Running   0          93m   192.168.0.111   aks-nodepool1-30945738-vmss000001   <none>           <none>
+  backend-7f95954f96-xvlxf   1/1     Running   0          93m   192.168.0.2     aks-nodepool1-30945738-vmss000001   <none>           <none>
+[PASS] No pods reporting CrashLoopBackOff, ImagePullBackOff, ErrImagePull, Pending, ContainerCreating, Error, or Unknown
+[PASS] All matching pods report READY containers equal to desired containers
+[PASS] No pod has 5 or more restarts
+
+Recent namespace events (last 5, sorted by time):
+  No resources found in book-review namespace.
+[PASS] No Warning-type events found in the namespace
+Service EndpointSlice evidence:
+Slice: backend-zr6n9 Ports: 3001 
+backend-7f95954f96-c62pd ready=true addresses=["192.168.0.111"]
+backend-7f95954f96-xvlxf ready=true addresses=["192.168.0.2"]
+[PASS] Service 'backend' has ready backend(s): 192.168.0.111
+192.168.0.2
+
+Previous-container logs for the first non-running pod (last 10 lines):
+  All matching pods are Running — no previous-container logs to capture.
+
+Summary:
+PASS: 6
+WARN: 0
+FAIL: 0
+Overall Status: HEALTHY
+Script Exit Code: 0
+Report File: /home/gbadedata/k8s-triage-lab/reports/k8s-health-report.txt

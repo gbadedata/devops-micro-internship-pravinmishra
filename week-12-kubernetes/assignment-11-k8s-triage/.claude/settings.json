@@ -1,0 +1,37 @@
+{
+  "env": {
+    "KUBECONFIG": "/home/gbadedata/.kube/dmi-week12-triage-readonly"
+  },
+  "permissions": {
+    "deny": [
+      "Bash(kubectl apply *)",
+      "Bash(kubectl create *)",
+      "Bash(kubectl delete *)",
+      "Bash(kubectl edit *)",
+      "Bash(kubectl patch *)",
+      "Bash(kubectl replace *)",
+      "Bash(kubectl scale *)",
+      "Bash(kubectl autoscale *)",
+      "Bash(kubectl set *)",
+      "Bash(kubectl label *)",
+      "Bash(kubectl annotate *)",
+      "Bash(kubectl rollout restart *)",
+      "Bash(kubectl rollout undo *)",
+      "Bash(kubectl rollout pause *)",
+      "Bash(kubectl rollout resume *)",
+      "Bash(kubectl exec *)",
+      "Bash(kubectl cp *)",
+      "Bash(kubectl port-forward *)",
+      "Bash(kubectl cordon *)",
+      "Bash(kubectl uncordon *)",
+      "Bash(kubectl drain *)",
+      "Bash(kubectl taint *)",
+      "Bash(kubectl config *)",
+      "Bash(az *)",
+      "Bash(helm *)",
+      "Read(~/.kube/**)",
+      "Read(~/.azure/**)",
+      "Read(~/.config/dmi/**)"
+    ]
+  }
+}

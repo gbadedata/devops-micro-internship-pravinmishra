@@ -1,0 +1,46 @@
+========================================
+Kubernetes Incident Triage Report
+========================================
+Full Name: Oluwagbade Odimayo
+Timestamp: 2026-10-14T17:32:25Z
+Namespace: book-review
+App Label: app=book-review,tier=backend
+Service: backend
+
+[PASS] Cluster access, namespace, and matching pod selection verified (3 pod(s))
+
+Pod status (kubectl get pods -o wide):
+  NAME                       READY   STATUS             RESTARTS   AGE    IP              NODE                                NOMINATED NODE   READINESS GATES
+  backend-645fcc9476-r92gc   0/1     ImagePullBackOff   0          119s   192.168.0.205   aks-nodepool1-30945738-vmss000001   <none>           <none>
+  backend-7f95954f96-c62pd   1/1     Running            0          106m   192.168.0.111   aks-nodepool1-30945738-vmss000001   <none>           <none>
+  backend-7f95954f96-xvlxf   1/1     Running            0          105m   192.168.0.2     aks-nodepool1-30945738-vmss000001   <none>           <none>
+[FAIL] One or more pods are in a bad state: backend-645fcc9476-r92gc ImagePullBackOff
+[FAIL] Pod(s) not passing readiness: backend-645fcc9476-r92gc (READY 0/1)
+[PASS] No pod has 5 or more restarts
+
+Recent namespace events (last 5, sorted by time):
+  34s    Normal    Pulling             pod/backend-645fcc9476-r92gc    Pulling image "gbadedata/book-review-backend:0.0.0-does-not-exist"
+  34s    Warning   Failed              pod/backend-645fcc9476-r92gc    Failed to pull image "gbadedata/book-review-backend:0.0.0-does-not-exist": rpc error: code = NotFound desc = failed to pull and unpack image "docker.io/gbadedata/book-review-backend:0.0.0-does-not-exist": failed to resolve image: docker.io/gbadedata/book-review-backend:0.0.0-does-not-exist: not found
+  34s    Warning   Failed              pod/backend-645fcc9476-r92gc    Error: ErrImagePull
+  11s    Normal    BackOff             pod/backend-645fcc9476-r92gc    Back-off pulling image "gbadedata/book-review-backend:0.0.0-does-not-exist"
+  11s    Warning   Failed              pod/backend-645fcc9476-r92gc    Error: ImagePullBackOff
+[WARN] Warning events are present (including historical events); confirm age and workload before attributing a cause.
+Service EndpointSlice evidence:
+Slice: backend-zr6n9 Ports: 3001 
+backend-7f95954f96-c62pd ready=true addresses=["192.168.0.111"]
+backend-7f95954f96-xvlxf ready=true addresses=["192.168.0.2"]
+backend-645fcc9476-r92gc ready=false addresses=["192.168.0.205"]
+[PASS] Service 'backend' has ready backend(s): 192.168.0.111
+192.168.0.2
+
+Previous-container logs for the first non-running pod (last 10 lines):
+  Defaulted container "backend" out of: backend, wait-for-mysql (init)
+  Error from server (BadRequest): previous terminated container "backend" in pod "backend-645fcc9476-r92gc" not found
+
+Summary:
+PASS: 3
+WARN: 1
+FAIL: 2
+Overall Status: FAIL
+Script Exit Code: 2
+Report File: /home/gbadedata/k8s-triage-lab/reports/k8s-health-report.txt

@@ -1,0 +1,2 @@
+# Rewritten on every run; the human saves copies (baseline, incident-failure, recovery)
+reports/k8s-health-report.txt
