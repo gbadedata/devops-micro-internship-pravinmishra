@@ -1,0 +1,110 @@
+# Data tier: MySQL 8.4 as a single-replica StatefulSet with its own persistent Azure Disk.
+# The headless Service gives the Pod a stable DNS name (mysql) and is reachable only inside the cluster.
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: book-review
+  labels:
+    app: book-review
+    tier: database
+spec:
+  clusterIP: None
+  selector:
+    app: book-review
+    tier: database
+  ports:
+    - name: mysql
+      port: 3306
+      targetPort: mysql
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+  namespace: book-review
+  labels:
+    app: book-review
+    tier: database
+spec:
+  serviceName: mysql
+  replicas: 1
+  selector:
+    matchLabels:
+      app: book-review
+      tier: database
+  template:
+    metadata:
+      labels:
+        app: book-review
+        tier: database
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: mysql
+          image: mysql:8.4.11
+          ports:
+            - name: mysql
+              containerPort: 3306
+          env:
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: book-review-config
+                  key: DB_NAME
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: book-review-config
+                  key: DB_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: book-review-secrets
+                  key: DB_PASS
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: book-review-secrets
+                  key: MYSQL_ROOT_PASSWORD
+          # TCP to 127.0.0.1 as the app user: the temporary server MySQL runs during first-time
+          # initialisation listens on a socket only, so this cannot pass before the real server is up.
+          startupProbe:
+            exec:
+              command: ["sh", "-c", "MYSQL_PWD=\"$MYSQL_PASSWORD\" mysqladmin ping -h 127.0.0.1 -u \"$MYSQL_USER\" --silent"]
+            periodSeconds: 10
+            failureThreshold: 30
+          readinessProbe:
+            exec:
+              command: ["sh", "-c", "MYSQL_PWD=\"$MYSQL_PASSWORD\" mysqladmin ping -h 127.0.0.1 -u \"$MYSQL_USER\" --silent"]
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            exec:
+              command: ["sh", "-c", "mysqladmin ping -h 127.0.0.1 --silent"]
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              memory: 1Gi
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+              # A new Azure Disk contains lost+found; MySQL refuses to initialise a non-empty directory
+              subPath: mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+        labels:
+          app: book-review
+          tier: database
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: managed-csi
+        resources:
+          requests:
+            storage: 8Gi

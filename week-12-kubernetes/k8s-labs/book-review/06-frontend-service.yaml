@@ -1,0 +1,18 @@
+# The only public entry point: an Azure Standard Load Balancer with a public IP, forwarding port 80 to Nginx.
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: book-review
+  labels:
+    app: book-review
+    tier: frontend
+spec:
+  type: LoadBalancer
+  selector:
+    app: book-review
+    tier: frontend
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

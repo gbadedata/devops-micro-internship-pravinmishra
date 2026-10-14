@@ -1,0 +1,151 @@
+# Frontend tier: each Pod runs Nginx on port 80 in front of the Next.js server on localhost:3000.
+# Nginx sends /api/ to the internal backend Service and everything else to Next.js.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-nginx
+  namespace: book-review
+  labels:
+    app: book-review
+    tier: frontend
+data:
+  default.conf: |
+    server {
+        listen 80;
+        server_name _;
+
+        location = /nginx-healthz {
+            access_log off;
+            default_type text/plain;
+            return 200 "ok\n";
+        }
+
+        # API calls go to the internal backend Service (ClusterIP, port 3001)
+        location /api/ {
+            proxy_pass http://backend.book-review.svc.cluster.local:3001;
+            proxy_http_version 1.1;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_read_timeout 30s;
+        }
+
+        # Everything else goes to the Next.js server in the same Pod
+        location / {
+            proxy_pass http://127.0.0.1:3000;
+            proxy_http_version 1.1;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: book-review
+  labels:
+    app: book-review
+    tier: frontend
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: book-review
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: book-review
+        tier: frontend
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+        # Lets the non-root Nginx (uid 101) listen on port 80; this sysctl is allowed by the baseline standard
+        sysctls:
+          - name: net.ipv4.ip_unprivileged_port_start
+            value: "0"
+      containers:
+        - name: nginx
+          image: nginxinc/nginx-unprivileged:1.30.5-alpine
+          ports:
+            - name: http
+              containerPort: 80
+          volumeMounts:
+            - name: nginx-conf
+              mountPath: /etc/nginx/conf.d
+              readOnly: true
+          readinessProbe:
+            httpGet:
+              path: /nginx-healthz
+              port: http
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /nginx-healthz
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              memory: 64Mi
+          securityContext:
+            runAsUser: 101
+            runAsGroup: 101
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+        - name: nextjs
+          image: gbadedata/book-review-frontend:00dd4a5
+          ports:
+            - name: nextjs
+              containerPort: 3000
+          env:
+            # Kubernetes sets HOSTNAME to the Pod name, and Next.js binds to HOSTNAME;
+            # 0.0.0.0 keeps it reachable on localhost for Nginx and on the Pod IP for the probes
+            - name: HOSTNAME
+              value: "0.0.0.0"
+            - name: PORT
+              value: "3000"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: nextjs
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: nextjs
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              memory: 384Mi
+          securityContext:
+            # The image's USER is the named user "node"; Kubernetes needs the numeric ID to verify non-root
+            runAsUser: 1000
+            runAsGroup: 1000
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+      volumes:
+        - name: nginx-conf
+          configMap:
+            name: frontend-nginx

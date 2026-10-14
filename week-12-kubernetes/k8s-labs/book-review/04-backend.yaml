@@ -1,0 +1,115 @@
+# Backend tier: the Node.js/Express API on port 3001, reachable only through the internal ClusterIP Service.
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: book-review
+  labels:
+    app: book-review
+    tier: backend
+spec:
+  type: ClusterIP
+  selector:
+    app: book-review
+    tier: backend
+  ports:
+    - name: http
+      port: 3001
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: book-review
+  labels:
+    app: book-review
+    tier: backend
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: book-review
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: book-review
+        tier: backend
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        # The image's USER is the named user "node"; Kubernetes needs the numeric ID to verify non-root
+        runAsUser: 1000
+        runAsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      initContainers:
+        # Wait until MySQL accepts TCP connections, so the API does not crash-loop while the database starts
+        - name: wait-for-mysql
+          image: gbadedata/book-review-backend:00dd4a5
+          command:
+            - sh
+            - -c
+            - |
+              until node -e "require('net').connect(Number(process.env.DB_PORT), process.env.DB_HOST).on('connect', () => process.exit(0)).on('error', () => process.exit(1))"; do
+                echo "waiting for MySQL at $DB_HOST:$DB_PORT"; sleep 3
+              done
+          envFrom:
+            - configMapRef:
+                name: book-review-config
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+      containers:
+        - name: backend
+          image: gbadedata/book-review-backend:00dd4a5
+          ports:
+            - name: http
+              containerPort: 3001
+          envFrom:
+            - configMapRef:
+                name: book-review-config
+          env:
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: book-review-secrets
+                  key: DB_PASS
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: book-review-secrets
+                  key: JWT_SECRET
+          # "/" is only served after the database connection and schema sync succeed
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              memory: 256Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]

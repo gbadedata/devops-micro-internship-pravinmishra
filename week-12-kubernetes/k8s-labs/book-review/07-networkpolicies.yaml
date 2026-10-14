@@ -1,0 +1,63 @@
+# Allowed paths: internet -> frontend:80 -> backend:3001 -> mysql:3306. Everything else into the namespace is denied.
+# (Traffic from the node itself, such as kubelet probes, is always allowed by Kubernetes NetworkPolicy semantics.)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+  namespace: book-review
+spec:
+  podSelector: {}
+  policyTypes: ["Ingress"]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-frontend-http
+  namespace: book-review
+spec:
+  podSelector:
+    matchLabels:
+      tier: frontend
+  policyTypes: ["Ingress"]
+  ingress:
+    - ports:
+        - protocol: TCP
+          port: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-backend-from-frontend
+  namespace: book-review
+spec:
+  podSelector:
+    matchLabels:
+      tier: backend
+  policyTypes: ["Ingress"]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              tier: frontend
+      ports:
+        - protocol: TCP
+          port: 3001
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-mysql-from-backend
+  namespace: book-review
+spec:
+  podSelector:
+    matchLabels:
+      tier: database
+  policyTypes: ["Ingress"]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              tier: backend
+      ports:
+        - protocol: TCP
+          port: 3306

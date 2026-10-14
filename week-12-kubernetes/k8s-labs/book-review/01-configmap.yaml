@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: book-review-config
+  namespace: book-review
+  labels:
+    app: book-review
+data:
+  # Backend settings (non-sensitive). Passwords and the JWT secret live in the book-review-secrets Secret.
+  PORT: "3001"
+  DB_HOST: mysql
+  DB_PORT: "3306"
+  DB_NAME: book_review_db
+  DB_USER: bookreview
+  DB_DIALECT: mysql
+  # The browser's origin for the public frontend; the LoadBalancer IP, set as soon as Azure assigned it (the frontend Service is created first)
+  ALLOWED_ORIGINS: "http://51.141.108.62"
