@@ -320,7 +320,7 @@ Not attempted: Helm, HPA, TLS, Ingress and the Kubernetes dashboard.
 
 State which resources were removed or why the environment is being retained.
 
-Retained for now. The AKS cluster `aks-oluwagbade-week12` (resource group `rg-oluwagbade-week12-aks`, UK West) keeps running so the frontend URL works during grading, and because Assignment 11 uses the same cluster. After Assignment 11 I will delete the whole resource group, which removes the cluster, its node, the Azure Disk and the public IP, and then delete the local Secret values file. The Docker Hub images stay public; they contain no secrets.
+Removed. The AKS cluster `aks-oluwagbade-week12` (resource group `rg-oluwagbade-week12-aks`, UK West) stayed up through Assignment 11, which used the same cluster. I stopped it on 14 October 2026 once both assignments were submitted, and deleted the whole resource group on 15 October 2026 after grading. That removed the cluster, its node, the Azure Disk and the public IP, so http://51.141.108.62 no longer answers. I also deleted the local Secret values file and the Assignment 11 read-only kubeconfig. The Docker Hub images stay public; they contain no secrets.
 
 ---
 
