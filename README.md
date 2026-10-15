@@ -3,7 +3,7 @@
 ![Cohort](https://img.shields.io/badge/Cohort-3-blue?style=for-the-badge)
 ![Program](https://img.shields.io/badge/DevOps_Micro_Internship-Pravin_Mishra-orange?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-In_Progress-yellow?style=for-the-badge)
-![Weeks](https://img.shields.io/badge/Weeks_Completed-11%2F14-green?style=for-the-badge)
+![Weeks](https://img.shields.io/badge/Weeks_Completed-13%2F14-green?style=for-the-badge)
 
 > 👋 **New here?** Read the [submission instructions](./onboarding) first — how to fork, fill in, and submit your assignments.
 > Find all the required links & assignment guidelines from here [Required links](./dmi_resources.md)
@@ -104,7 +104,7 @@ This is not a course. It is an internship-style program — real deployments, re
 [![Week 11 - Docker](./badges/week-11.svg)](./week-11-docker/)
 
 <!-- Week 12 -> Kubernetes -->
-<!-- [![Week 12 - K8s](./badges/week-12.svg)](./week-12-kubernetes/) -->
+[![Week 12 - K8s](./badges/week-12.svg)](./week-12-kubernetes/)
 
 <!-- Week 13 -> Final Project / Capstone -->
 <!-- [![Week 13 - Capstone](./badges/week-13.svg)](./week-13-final-project/) -->
@@ -142,7 +142,7 @@ This is not a course. It is an internship-style program — real deployments, re
 | 09 | Ansible | ✅ Completed | ✅ Solved | — | [Blog](https://gbadedata.hashnode.dev/ansible-worked-still-not-done) |
 | 10 | Azure DevOps (CI/CD) | ✅ Completed | ✅ Solved | — | [Blog](https://gbadedata.hashnode.dev/green-pipeline-is-a-claim-not-proof) |
 | 11 | Docker | ✅ Completed | ✅ Solved | — | [Blog](https://gbadedata.hashnode.dev/containers-expose-your-assumptions) |
-| 12 | Kubernetes | ⬜ Not Started | ⏳ Pending | — | — |
+| 12 | Kubernetes | ✅ Completed | ✅ Solved | — | [Blog](https://gbadedata.hashnode.dev/kubectl-said-yes-the-api-server-said-forbidden) |
 | 13 | Final Project | ⬜ Not Started | ⏳ Pending | — | — |
 
 **Status:** ⬜ Not Started &nbsp;|&nbsp; 🔄 In Progress &nbsp;|&nbsp; ✅ Completed<br>
